@@ -1,0 +1,598 @@
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
+:root {
+    --bg: rgb(235, 208, 144);
+    --bk: rgb(255, 253, 251);
+    --accent: rgb(255, 0, 85);
+    --text: rgb(29, 25, 26);
+    --rule: rgb(141, 122, 97);
+    --frame: rgb(25, 18, 10);
+    --button: rgba(125, 88, 50, 0.5);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+body {
+    margin: 0;
+    background: url(../images/page-background-02.jpg);
+    background-size: cover;
+    color: var(--text);
+    font-family: serif;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 90%;
+    margin: auto;
+}
+
+/* Typography */
+h1 {
+    font-family: "Homemade Apple", cursive;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 0.5rem;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: 'Oswald', sans-serif;
+    margin: 0 0 1.25rem 0;
+}
+
+p {
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+li {
+    font-family: system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+a {
+    color: var(--bk);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* ============================================
+   NAVIGATION BAR
+   ============================================ */
+.navbar {
+    background: rgba(25, 18, 10, 0.95);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 0.125rem 0.5rem rgba(0,0,0,0.3);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent);
+    text-shadow: #222 0.125rem 0.125rem 0.25rem;
+    padding-bottom: 0;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--bg);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* Dropdown Menu */
+.nav-links .dropdown {
+    position: relative;
+}
+
+.nav-links .dropdown-toggle {
+    cursor: pointer;
+    padding-bottom: 1rem;
+}
+
+.nav-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(25, 18, 10, 0.98);
+    min-width: 200px;
+    padding: 0.5rem 0;
+    margin-top: 0;
+    padding-top: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.nav-links .dropdown:hover .dropdown-menu,
+.nav-links .dropdown-menu:hover {
+    display: block;
+}
+
+.nav-links .dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.nav-links .dropdown-menu a:hover {
+    background: rgba(255, 0, 85, 0.1);
+}
+
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+.page-header {
+    padding: 4rem 0 3rem;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    box-shadow: 0 0.625rem 0.625rem rgba(0,0,0,0.4);
+}
+
+/* Banner variants for different pages */
+.page-header.banner-index {
+    background-image: url('../images/banner-index.jpg');
+}
+
+.page-header.banner-about {
+    background-image: url('../images/banner-about.jpg');
+}
+
+.page-header.banner-contact {
+    background-image: url('../images/banner-contact.jpg');
+}
+
+.page-header.banner-pages {
+    background-image: url('../images/banner-pages.jpg');
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 0;
+}
+
+.page-header .container {
+    position: relative;
+    z-index: 1;
+}
+
+.page-header h1 {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    margin-bottom: 0.5rem;
+    color: var(--bk);
+    text-shadow: 0.125rem 0.125rem 0.5rem rgba(0, 0, 0, 0.8);
+}
+
+.page-header .tagline {
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 1.2rem;
+    color: var(--bk);
+    opacity: 0.95;
+    text-shadow: 0.0625rem 0.0625rem 0.25rem rgba(0, 0, 0, 0.8);
+}
+
+/* ============================================
+   GALLERY GRID (index.html)
+   ============================================ */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1800px;
+    margin: 3rem auto;
+    background-image: url(../images/section-background.jpg);
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.625rem 0.625rem rgba(0,0,0,0.2);
+}
+
+.thumb {
+    display: block;
+    position: relative;
+    padding: 1.5rem;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.thumb img {
+    width: 100%;
+    height: auto;
+    display: inside;
+    border: 0.0625rem solid var(--rule);
+    
+    box-shadow: 0 0.625rem 0.625rem rgba(0,0,0,0.2);
+    vertical-align: bottom;
+    transition: transform 0.3s ease;
+}
+
+.thumb:hover img {
+    transform: scale(1.05);
+}
+
+.thumb-title {
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    color: var(--text);
+}
+
+/* ============================================
+   ARTWORK DETAIL PAGES
+   ============================================ */
+.nft-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 4vh;
+    margin-bottom: 5vh;
+    padding-left: 5vh;
+    align-items: start;
+    background-image: url(../images/section-background.jpg);
+    background-size: cover;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.625rem 1.25rem rgba(0,0,0,0.12);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nft-row:hover {
+    transform: translateY(-0.3125rem);
+    box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.16);
+}
+
+.text-block {
+    padding: 2rem 4rem;
+}
+
+.section-title {
+    font-family: system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+}
+
+.nft-image-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 3rem 0 0;
+    width: fit-content;
+    height: fit-content;
+    cursor: zoom-in;
+    overflow: visible;
+}
+
+.nft-image-wrap img {
+    width: 90%;
+    height: 90%;
+    border: 0.625rem solid #1d0101;
+    display: block;
+    object-fit: contain;
+    transition: 0.5s transform;
+}
+
+.nft-image-wrap:hover img {
+    transform: scale(1.03);
+}
+
+.image-meta {
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text);
+    text-align: center;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
+.image-meta p {
+    margin: 2rem 0;
+}
+
+/* Buttons */
+.price-btn {
+    background: var(--button);
+    border: 0.0625rem solid #936f4c;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.price-btn:hover {
+    transform: translateY(-0.1875rem);
+    box-shadow: 0 0.5rem 1.125rem rgba(0,0,0,0.18);
+    opacity: 0.98;
+}
+
+.price-btn:active {
+    transform: translateY(0);
+}
+
+.back-link {
+    display: inline-block;
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--button);
+    text-decoration: none;
+    margin-top: 2rem;
+}
+
+.next-link {
+    display: inline-block;
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--button);
+    text-decoration: none;
+    text-align: right;
+}
+
+.back-link:hover,
+.next-link:hover {
+    color: var(--accent);
+}
+
+/* ============================================
+   LIGHTBOX
+   ============================================ */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    cursor: zoom-out;
+}
+
+.lightbox img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ============================================
+   CONTENT PAGES (About, Contact)
+   ============================================ */
+.content-page {
+    padding: 3rem 0 5rem;
+    max-width: 60rem;
+}
+
+.about-section h2,
+.contact-section h2 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--text);
+    margin: 2.5rem 0 1rem;
+    font-size: 1.8rem;
+}
+
+.about-section p,
+.contact-section p {
+    font-family: 'Red Hat Text', sans-serif;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0 3rem;
+}
+
+.contact-item {
+    padding: 1.5rem;
+    background: rgba(43, 22, 1, 0.6);
+    border-radius: 0.5rem;
+    border: 0.0625rem solid var(--rule);
+}
+
+.contact-item h3 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--accent);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+}
+
+.contact-item p {
+    margin: 0;
+}
+
+.contact-item a {
+    font-weight: 600;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    background: rgba(25, 18, 10, 0.95);
+    color: var(--bk);
+    padding: 3rem 0 0;
+    margin-top: 5rem;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+.footer-section h3 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.footer-section h4 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--bk);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.footer-section p {
+    color: rgba(255, 253, 251, 0.8);
+    line-height: 1.6;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+    font-family: 'Red Hat Text', sans-serif;
+    color: rgba(255, 253, 251, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.footer-bottom {
+    border-top: 0.0625rem solid rgba(255, 253, 251, 0.2);
+    padding: 1.5rem 0;
+    text-align: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: rgba(255, 253, 251, 0.6);
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   4K OPTIMIZATIONS
+   ============================================ */
+@media (min-width: 160rem) {
+    .nft-row {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    .narrative-text {
+        grid-column: span 2;
+    }
+    
+    .nft-image-wrap {
+        grid-column: span 4;
+    }
+    
+    .nft-row:nth-child(even) .narrative-text {
+        order: 2;
+        grid-column: 5 / span 2;
+    }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .gallery {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 56.25rem) {
+    .container {
+        max-width: 95%;
+        padding: 0 1rem;
+    }
+    
+    .nft-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 6vh;
+        padding: 1rem;
+    }
+    
+    .nft-image-wrap {
+        padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .nft-image-wrap img {
+        width: 100%;
+        height: auto;
+        margin-right: 0;
+        border-width: 0.5rem;
+    }
+    
+    .nft-row:nth-child(even) .narrative-text {
+        order: 0;
+        grid-column: auto;
+    }
+    
+    .navbar .logo {
+        font-size: 1.25rem;
+    }
+}

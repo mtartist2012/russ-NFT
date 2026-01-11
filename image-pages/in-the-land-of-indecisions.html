@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>in the land of indecisions - digital collage by RUSSNFT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Droid+Sans:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">RUSS NFT</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Gallery</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Images</a>
+                    <div class="dropdown-menu">
+                        <a href="a-forest.html">a forest</a>
+                        <a href="a-quiet-escape.html">a quiet escape</a>
+                        <a href="moving-on.html">moving on</a>
+                        <a href="cloud-background.html">Cloud background</a>
+                        <a href="blue-redux.html">Blue Redux</a>
+                        <a href="cowboy-in-the-woods.html">Cowboy in the woods</a>
+                        <a href="cowgirl-in-the-sand.html">Cowgirl in the sand</a>
+                        <a href="fight-or-flight.html">fight or flight</a>
+                        <a href="golden-desire.html">Golden Desire</a>
+                        <a href="in-the-land-of-green-and-red.html">in the land of green and red</a>
+                        <a href="in-the-land-of-indecisions.html">in the land of indecisions</a>
+                        <a href="in-the-land-of-make-believe.html">in the land of make believe</a>
+                        <a href="in-the-land-of-pink-and-grey.html">in the land of pink and grey</a>
+                        <a href="like-father-like-son.html">Like Father, Like Son</a>
+                        <a href="the-dollar-is-our-king.html">The dollar is our king</a>
+                        <a href="kline-again.html">Kline again</a>
+                        <a href="vulture-values.html">vulture values</a>
+                        <a href="all-american.html">All American</a>
+                        <a href="by-my-side.html">by my side</a>
+                        <a href="everything-you-want-me-to.html">everything you want me to</a>
+                        <a href="ease-my-worried-mind.html">ease my worried mind</a>
+                        <a href="thunderhead-melody.html">Thunderhead Melody</a>
+                        <a href="red-room.html">Red room</a>
+                        <a href="make-room.html">Make room</a>
+                    </div>
+                </li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header banner-pages">
+        <div class="container">
+            <h1>Formidible digital bricolage</h1>
+            <p class="tagline">new work for the 4K age</p>
+        </div>
+    </header>
+
+    <main class="container" id="gallery-root"></main>
+
+    <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+        <img id="lb-img" src="">
+    </div>
+
+    <script>
+        const nfts = [
+           
+    { 
+        title: "in the land of indecisions",
+        desc: "A contemplative digital environment shaped by ambiguity and shifting choices, blending layered textures to evoke the emotional terrain of indecision.", 
+        date: "2025", 
+        dims: "6000 x 6000px", 
+        file: "../images/full/in-the-land-of-indecisions-3.jpg",
+        price: "NFT listing",
+        themes: "This piece explores ambiguity and the emotional terrain of indecision through layered textures and shifting forms, capturing the contemplative space between choices.",
+        analysis: "ctc",
+        collector: "First edition NFT; RVL signature; part of the 2025 series.",
+        series: "ctc",
+        artistNotes: "ctc",
+        keywords: ["ambiguity art", "emotional indecision", "layered digital textures", "contemplative abstraction", "RVL digital art"]
+    },
+                   ];
+
+        const root = document.getElementById('gallery-root');
+        
+        nfts.forEach((nft, idx) => {
+            const section = document.createElement('section');
+            section.className = 'nft-row';
+            section.innerHTML = `
+                    <!-- LEFT COLUMN (text on large screens) -->
+                    <div class="text-block">
+                        <h1>${nft.title}</h1>
+                        
+                        <p>${nft.desc}</p>
+                        
+                        <div class="section-title">Themes</div>
+                        <p>${nft.themes || 'ctc'}</p>
+                        
+                        <div class="section-title">Analysis</div>
+                        <p>${nft.analysis || 'ctc'}</p>
+                        
+                        <div class="section-title">Collector Notes / Provenance</div>
+                        <p>${nft.collector || 'First edition NFT; RVL signature; part of the 2025 series.'}</p>
+                        
+                        <div class="section-title">Series Context</div>
+                        <p>${nft.series || 'ctc'}</p>
+                        
+                        <div class="section-title">Artist Notes</div>
+                        <p>${nft.artistNotes || 'ctc'}</p>
+                        
+                        <div class="section-title">Keywords</div>
+                        <ul>
+                            ${nft.keywords ? nft.keywords.map(kw => `<li>${kw}</li>`).join('') : '<li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li>'}
+                        </ul>
+                        
+                    
+                        <p>
+                            <a href="#" target="_blank" class="price-btn">${nft.price}</a>
+                        </p>
+                        
+                        <a href="../index.html" class="back-link">← Back to Gallery</a>
+                    </div>
+                    
+                    <!-- RIGHT COLUMN (image on large screens) -->
+                    <div class="nft-image-wrap">
+                        <img src="${nft.file}"
+                             alt="${nft.title} — digital artwork by russNFT"
+                             onclick="openLB('${nft.file}')">
+                        <div class="image-meta">
+                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                        </div>
+                        <a href="in-the-land-of-make-believe.html" class="next-link">Next Image →</a>
+                    </div>
+            `;
+            root.appendChild(section);
+        });
+
+        function openLB(src) {
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+    </script>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>RUSS NFT</h3>
+                <p>Unlocking the potential of digital art for the 4K age</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="../index.html">Gallery</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 RUSS NFT. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
