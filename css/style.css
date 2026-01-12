@@ -236,10 +236,10 @@ a:hover {
 .thumb {
     display: block;
     position: relative;
-    padding: 1.5rem;
+    
     cursor: pointer;
     overflow: hidden;
-    border-radius: 6px;
+
     text-decoration: none;
 }
 
