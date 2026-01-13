@@ -123,7 +123,7 @@
                     <!-- LEFT COLUMN (image on large screens) -->
                     <div class="nft-image-wrapper" 
                          data-image="${nft.file}" 
-                         data-ratio="1/1"
+                         data-dims="${nft.dims}"
                          onclick="openLB('${nft.file}')">
                     </div>
                     <div class="image-meta">
@@ -141,9 +141,18 @@
             
             wrappers.forEach(wrapper => {
                 const imgUrl = wrapper.dataset.image;
-                const ratio = wrapper.dataset.ratio;
+                const dims = wrapper.dataset.dims;
                 
-                wrapper.style.aspectRatio = ratio;
+                // Calculate aspect ratio from dimensions
+                if (dims) {
+                    const match = dims.match(/(\d+)\s*x\s*(\d+)/i);
+                    if (match) {
+                        const width = parseInt(match[1]);
+                        const height = parseInt(match[2]);
+                        const ratio = width / height;
+                        wrapper.style.aspectRatio = ratio;
+                    }
+                }
                 
                 const bg = document.createElement("div");
                 bg.className = "nft-image";
