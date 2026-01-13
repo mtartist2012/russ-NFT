@@ -9,7 +9,11 @@ Concise, actionable guidance for AI coding agents working on this repository —
 
 ## Architecture & data flow
 - **Multi-page pattern**: [index.html](index.html) shows thumbnail grid linking to dedicated pages (e.g., [image-pages/a-forest.html](image-pages/a-forest.html))
-- **Naming convention**: Thumbnails use `-1` suffix (`a-forest-1.jpg`), full images use `-3` suffix (`a-forest-3.jpg`), same basename required
+- **Naming convention**: Thumbnails use `-1` suffix (`a-forest-1.jpg`), medium-res use `-2` suffix (`a-forest-2.jpg`), full images use `-3` suffix (`a-forest-3.jpg`), same basename required
+- **Responsive images** (JavaScript-driven):
+  - **Index gallery**: Mobile (≤768px) loads `-1` from `thumbs/`, desktop/tablet loads `-2` from `main/`
+  - **Detail pages**: Tablet/mobile (≤1280px) loads `-2` from `main/`, desktop loads `-3` from `full/`
+  - Image switching handled by JavaScript on window resize
 - **Navigation**: Dropdown menu in navbar (`<li class="dropdown">`) lists all artworks — must be updated in both [index.html](index.html) AND all pages in `image-pages/` when adding new artwork
 - **Page templates** (located in `z - working/` folder):
   - [z - working/new-image-template.html](z - working/new-image-template.html): JS-driven gallery with inline NFT data in `<script>` block — **migrating to this approach**
@@ -22,11 +26,11 @@ Concise, actionable guidance for AI coding agents working on this repository —
 ## Critical file structures
 ```
 images/
-  thumbs/     → <basename>-1.jpg (gallery thumbnails)
-  full/       → <basename>-3.jpg (high-res artwork, shown on detail pages)
-  main/       → hero-XX.jpg, banner-XX.jpg (layout assets)
+  thumbs/     → <basename>-1.jpg (mobile gallery thumbnails, ≤768px)
+  main/       → <basename>-2.jpg (tablet/desktop gallery + detail pages ≤1280px)
+  full/       → <basename>-3.jpg (high-res detail pages >1280px)
   z-not/      → unused/archived images
-image-pages/  → individual artwork detail pages (static HTML)
+image-pages/  → individual artwork detail pages (JS-driven with responsive images)
 css/
   style.css   → main styling for ALL pages (gallery + detail pages)
 z - working/  → templates and experimental layouts
@@ -49,6 +53,7 @@ python -m http.server 8000
 ## Project-specific conventions
 1. **Adding new artwork**: 
    - Place thumbnail in `images/thumbs/<name>-1.jpg` 
+   - Place medium-res in `images/main/<name>-2.jpg`
    - Place full image in `images/full/<name>-3.jpg`
    - Create detail page in `image-pages/<name>.html` using existing pages like [image-pages/a-forest.html](image-pages/a-forest.html) as template
    - Add gallery entry to [index.html](index.html) gallery section:
@@ -65,7 +70,7 @@ python -m http.server 8000
    - **Primary template**: Use [z - working/new-image-template.html](z - working/new-image-template.html) for new artwork pages — JS-driven with inline NFT data in `<script>` block
    - Legacy pages in `image-pages/` folder use static HTML (being migrated to JS approach)
    - [z - working/text-template.html](z - working/text-template.html) provides text structure for artwork descriptions
-   - [staging list.js](staging list.js) holds NFT metadata (title, desc, date, dims) for JS-driven galleries
+   - [z - working/staging list.js](z - working/staging list.js) holds NFT metadata (title, desc, date, dims) for JS-driven galleries
    - [z - working/new-hub.html](z - working/new-hub.html) is an alternative gallery hub layout
    - **Detail page structure**: Each artwork page includes Themes, Analysis, Collector Notes/Provenance, Series Context, Artist Notes, and Keywords sections
 
@@ -77,7 +82,7 @@ python -m http.server 8000
 4. **Do not rename/move**: `images/thumbs/`, `images/full/`, `images/main/`, `qr-codes/ASF-qr-codes/` — paths hard-coded in HTML.
 
 ## Styling patterns
-- **Gallery grid**: Uses `display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))` in [css/style.css](css/style.css)
+- **Gallery grid**: Desktop uses `grid-template-columns: repeat(3, 1fr)` with `gap: 1.5rem` in [css/style.css](css/style.css); responsive breakpoints adjust for mobile
 - **Detail pages**: Responsive 2-column layout (text left, image right on desktop) via [css/style.css](css/style.css)
 - **Fonts**: Google Fonts (Oswald, Droid Sans, Roboto, Homemade Apple, Red Hat Text) loaded in `<head>`
 - **CSS Variables**: Color scheme defined in `:root` ([css/style.css](css/style.css)) — `--bg`, `--bk`, `--accent`, `--text`, `--rule`, `--frame`, `--button`

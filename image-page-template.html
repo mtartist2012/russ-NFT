@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>a forest - digital collage by RUSSNFT</title>
+    <title>new image template</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
@@ -52,9 +52,9 @@
         </div>
     </nav>
 
-    <header class="page-header">
+    <header class="page-header banner-pages">
         <div class="container">
-            <h1>Unlocking the Potential</h1>
+            <h1>digital bricollage</h1>
             <p class="tagline">new work for the 4K age</p>
         </div>
     </header>
@@ -133,6 +133,7 @@
                         <div class="image-meta">
                             <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
                         </div>
+                        <a href="a-quiet-escape.html" class="next-link">Next Image →</a>
                     </div>
             `;
             root.appendChild(section);
@@ -142,6 +143,33 @@
             document.getElementById('lb-img').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
+
+        // Responsive image switching for detail pages
+        function updateDetailImage() {
+            const detailImage = document.querySelector('.nft-image-wrap img');
+            if (!detailImage) return;
+            
+            const isTabletOrMobile = window.innerWidth <= 1280;
+            const src = detailImage.src;
+            const filename = src.substring(src.lastIndexOf('/') + 1);
+            const basename = filename.replace(/-[23]\.jpg$/, '');
+            
+            if (isTabletOrMobile) {
+                // Use -2 images from main folder
+                const newSrc = `../images/main/${basename}-2.jpg`;
+                detailImage.src = newSrc;
+                detailImage.setAttribute('onclick', `openLB('${newSrc}')`);
+            } else {
+                // Use -3 images from full folder
+                const newSrc = `../images/full/${basename}-3.jpg`;
+                detailImage.src = newSrc;
+                detailImage.setAttribute('onclick', `openLB('${newSrc}')`);
+            }
+        }
+
+        // Run on load and resize
+        updateDetailImage();
+        window.addEventListener('resize', updateDetailImage);
     </script>
 
     <footer class="footer">

@@ -207,6 +207,30 @@
             document.getElementById('lb-img').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
+
+        // Responsive image switching for gallery
+        function updateGalleryImages() {
+            const galleryImages = document.querySelectorAll('.gallery .thumb img');
+            const isMobile = window.innerWidth <= 768;
+            
+            galleryImages.forEach(img => {
+                const src = img.src;
+                const filename = src.substring(src.lastIndexOf('/') + 1);
+                const basename = filename.replace(/-[12]\.jpg$/, '');
+                
+                if (isMobile) {
+                    // Use -1 images from thumbs folder
+                    img.src = `images/thumbs/${basename}-1.jpg`;
+                } else {
+                    // Use -2 images from main folder
+                    img.src = `images/main/${basename}-2.jpg`;
+                }
+            });
+        }
+
+        // Run on load and resize
+        updateGalleryImages();
+        window.addEventListener('resize', updateGalleryImages);
     </script>
 </body>
 </html>
