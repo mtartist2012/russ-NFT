@@ -11,8 +11,26 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
-            background: url(images/page-background-01.jpg);
+            background: url(images/page-background.jpg);
             background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: url(images/page-background.jpg);
+            background-size: cover;
+            filter: blur(8px);
+            z-index: -2;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
         }
     </style>
 </head>
@@ -27,38 +45,8 @@
                 <span></span>
             </button>
             <ul class="nav-links">
-                <li><a href="index.html">Gallery</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Images</a>
-                    <div class="dropdown-menu">
-                        <a href="image-pages/a-forest.html">a forest</a>
-                        <a href="image-pages/a-quiet-escape.html">a quiet escape</a>
-                        <a href="image-pages/moving-on.html">moving on</a>
-                        <a href="image-pages/cloud-background.html">Cloud background</a>
-                        <a href="image-pages/blue-redux.html">Blue Redux</a>
-                        <a href="image-pages/cowboy-in-the-woods.html">Cowboy in the woods</a>
-                        <a href="image-pages/cowgirl-in-the-sand.html">Cowgirl in the sand</a>
-                        <a href="image-pages/fight-or-flight.html">fight or flight</a>
-                        <a href="image-pages/golden-desire.html">Golden Desire</a>
-                        <a href="image-pages/in-the-land-of-green-and-red.html">in the land of green and red</a>
-                        <a href="image-pages/in-the-land-of-indecisions.html">in the land of indecisions</a>
-                        <a href="image-pages/in-the-land-of-make-believe.html">in the land of make believe</a>
-                        <a href="image-pages/in-the-land-of-pink-and-grey.html">in the land of pink and grey</a>
-                        <a href="image-pages/like-father-like-son.html">Like Father, Like Son</a>
-                        <a href="image-pages/the-dollar-is-our-king.html">The dollar is our king</a>
-                        <a href="image-pages/kline-again.html">Kline again</a>
-                        <a href="image-pages/vulture-values.html">vulture values</a>
-                        <a href="image-pages/all-american.html">All American</a>
-                        <a href="image-pages/by-my-side.html">by my side</a>
-                        <a href="image-pages/everything-you-want-me-to.html">everything you want me to</a>
-                        <a href="image-pages/ease-my-worried-mind.html">ease my worried mind</a>
-                        <a href="image-pages/thunderhead-melody.html">Thunderhead Melody</a>
-                        <a href="image-pages/red-room.html">Red room</a>
-                        <a href="image-pages/make-room.html">Make room</a>
-                    </div>
-                </li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html">gallery</a> <span style="color: var(--rule);">|</span> <a href="image-pages/a-forest.html">start</a></li>
+                <li><a href="about.html">about</a> <span style="color: var(--rule);">|</span> <a href="contact.html">contact</a></li>
             </ul>
         </div>
     </nav>

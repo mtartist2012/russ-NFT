@@ -194,7 +194,11 @@ a:hover {
    PAGE HEADER
    ============================================ */
 .page-header {
-    padding: 4rem 0 3rem;
+    height: 15rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     background-size: cover;
     background-position: center;
@@ -230,11 +234,16 @@ a:hover {
 
 .page-header .container {
     position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     z-index: 1;
 }
 
 .page-header h1 {
-    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-size: clamp(1.5rem, 5vw, 5rem);
     margin-bottom: 0.5rem;
     color: var(--bk);
     text-shadow: 0.125rem 0.125rem 0.5rem rgba(0, 0, 0, 0.8);
@@ -242,7 +251,7 @@ a:hover {
 
 .page-header .tagline {
     font-family: 'Red Hat Text', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--bk);
     opacity: 0.95;
     text-shadow: 0.0625rem 0.0625rem 0.25rem rgba(0, 0, 0, 0.8);
@@ -268,7 +277,7 @@ a:hover {
 .thumb {
     display: block;
     position: relative;
-    padding: 0.5rem;
+    padding: 1.5rem;
     cursor: pointer;
     overflow: visible;
 
@@ -326,6 +335,8 @@ a:hover {
     max-width: 100%;
     line-height: 1.8;
     order: 2;
+    grid-column: 2;
+    grid-row: 1 / span 2;
 }
 
 .section-title {
@@ -346,7 +357,8 @@ a:hover {
     height: fit-content;
     cursor: zoom-in;
     overflow: visible;
-    order: -1;
+    order: 0;
+    line-height: 0;
 }
 
 .nft-image-wrap img {
@@ -370,9 +382,12 @@ a:hover {
     width: 90%;
     overflow: hidden;
     cursor: zoom-in;
-    order: -1;
+    order: 0;
+    grid-column: 1;
+    grid-row: 1;
     border: 0.625rem solid #1d0101;
     margin: 2rem;
+    line-height: 0;
 }
 
 .nft-image {
@@ -386,6 +401,15 @@ a:hover {
 
 .nft-image-wrapper:hover .nft-image {
     transform: scale(1.03);
+}
+
+.image-column {
+    order: 1;
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .pixel-overlay {
@@ -473,6 +497,10 @@ a:hover {
     font-family: 'Red Hat Text', sans-serif;
     font-size: 1.1rem;
     margin-top: 2rem;
+}
+
+.nav-links a.active {
+        color: var(--accent);
 }
 
 .nav-links-bottom a {
@@ -674,8 +702,23 @@ a:hover {
     }
     
     .nft-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
+    }
+    
+    .text-block {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
+    
+    .nft-image-wrapper {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .image-column {
+        grid-column: 1;
+        grid-row: 2;
     }
     
     .container {
@@ -705,6 +748,45 @@ a:hover {
         gap: 1rem;
         margin-bottom: 6vh;
         padding: 1rem;
+    }
+    
+    .text-block {
+        grid-column: 1;
+        grid-row: 2;
+        padding: 1rem;
+        order: 2;
+    }
+    
+    .nft-image-wrapper {
+        grid-column: 1;
+        grid-row: 1;
+        order: 1;
+        width: calc(100% - 2rem) !important;
+        max-width: 100%;
+        margin: 0 auto !important;
+        border-width: 0.3rem;
+    }
+    
+    .image-column {
+        display: none;
+    }
+    
+    /* Show only essential content on mobile */
+    .text-block h1,
+    .text-block > p:first-of-type,
+    .text-block .price-btn {
+        display: block;
+    }
+    
+    .text-block h3,
+    .text-block ul,
+    .text-block > p:not(:first-of-type):not(:has(.price-btn)),
+    .nav-links-bottom {
+        display: none;
+    }
+    
+    .text-block p:has(.price-btn) {
+        display: block;
     }
     
     .nft-image-wrap {
@@ -737,7 +819,7 @@ a:hover {
     
     /* Mobile hamburger menu */
     .hamburger {
-        display: flex;
+        display: flex !important;
     }
     
     .nav-links {
@@ -752,10 +834,15 @@ a:hover {
         gap: 1rem;
         transition: right 0.3s ease;
         box-shadow: -0.25rem 0 1rem rgba(0,0,0,0.5);
+        z-index: 100;
     }
     
     .nav-links.active {
         right: 0;
+    }
+    
+    .nav-links li {
+        width: 100%;
     }
     
     .nav-links .dropdown-menu {

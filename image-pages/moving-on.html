@@ -11,45 +11,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Droid+Sans:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .nav-links a.active {
+            color: var(--accent);
+        }
+    </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="container nav-container">
             <a href="../index.html" class="logo">RUSS NFT</a>
+            <button class="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-links">
-                <li><a href="../index.html">Gallery</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Images</a>
-                    <div class="dropdown-menu">
-                        <a href="a-forest.html">a forest</a>
-                        <a href="blue-redux.html">Blue Redux</a>
-                        <a href="moving-on.html">moving on</a>
-                        <a href="cloud-background.html">Cloud background</a>
-                        <a href="a-quiet-escape.html">a quiet escape</a>
-                        <a href="cowboy-in-the-woods.html">Cowboy in the woods</a>
-                        <a href="cowgirl-in-the-sand.html">Cowgirl in the sand</a>
-                        <a href="fight-or-flight.html">fight or flight</a>
-                        <a href="golden-desire.html">Golden Desire</a>
-                        <a href="in-the-land-of-green-and-red.html">in the land of green and red</a>
-                        <a href="in-the-land-of-indecisions.html">in the land of indecisions</a>
-                        <a href="in-the-land-of-make-believe.html">in the land of make believe</a>
-                        <a href="in-the-land-of-pink-and-grey.html">in the land of pink and grey</a>
-                        <a href="like-father-like-son.html">Like Father, Like Son</a>
-                        <a href="the-dollar-is-our-king.html">The dollar is our king</a>
-                        <a href="kline-again.html">Kline again</a>
-                        <a href="vulture-values.html">vulture values</a>
-                        <a href="all-american.html">All American</a>
-                        <a href="by-my-side.html">by my side</a>
-                        <a href="everything-you-want-me-to.html">everything you want me to</a>
-                        <a href="ease-my-worried-mind.html">ease my worried mind</a>
-                        <a href="thunderhead-melody.html">Thunderhead Melody</a>
-                        <a href="red-room.html">Red room</a>
-                        <a href="make-room.html">Make room</a>
-                    </div>
-                </li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../contact.html">Contact</a></li>
+                <li><a href="blue-redux.html">previous</a> <span style="color: var(--rule);">|</span> <a href="../index.html">gallery</a> <span style="color: var(--rule);">|</span> <a href="cloud-background.html">next</a></li>
+                <li><a href="../about.html">about</a> <span style="color: var(--rule);">|</span> <a href="../contact.html">contact</a></li>
             </ul>
         </div>
     </nav>
@@ -80,27 +60,38 @@
             section.className = 'nft-row';
             section.innerHTML = `
                     <!-- RIGHT COLUMN (text on large screens) -->
+
+                    <div class="nft-image-wrapper" 
+                             data-image="${nft.file}" 
+                             data-dims="${nft.dims}"
+                             onclick="openLB('${nft.file}')">
+                        </div>
+                        
                     <div class="text-block">
+
+
                         <h1>${nft.title}</h1>
+                        
+                        
                         
                         <p>${nft.desc}</p>
                         
-                        <div class="section-title">Themes</div>
+                        <h3>Themes</h3>
                         <p>${nft.themes || 'ctc'}</p>
                         
-                        <div class="section-title">Analysis</div>
+                        <h3>Analysis</h3>
                         <p>${nft.analysis || 'ctc'}</p>
                         
-                        <div class="section-title">Collector Notes / Provenance</div>
+                        <h3>Collector Notes / Provenance</h3>
                         <p>${nft.collector || 'First edition NFT; RVL signature; part of the 2025 series.'}</p>
                         
-                        <div class="section-title">Series Context</div>
+                        <h3>Series Context</h3>
                         <p>${nft.series || 'ctc'}</p>
                         
-                        <div class="section-title">Artist Notes</div>
+                        <h3>Artist Notes</h3>
                         <p>${nft.artistNotes || ''}</p>
                         
-                        <div class="section-title">Keywords</div>
+                        <h3>Keywords</h3>
                         <ul>
                             ${nft.keywords ? nft.keywords.map(kw => `<li>${kw}</li>`).join('') : '<li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li>'}
                         </ul>
@@ -121,11 +112,6 @@
                     
                     <div class="image-column">
                     <!-- LEFT COLUMN (image on large screens) -->
-                    <div class="nft-image-wrapper" 
-                         data-image="${nft.file}" 
-                         data-dims="${nft.dims}"
-                         onclick="openLB('${nft.file}')">
-                    </div>
                     <div class="image-meta">
                         <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
                     </div>
@@ -238,28 +224,18 @@
         // Mobile menu toggle
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
-        const dropdown = document.querySelector('.dropdown');
-        const dropdownToggle = document.querySelector('.dropdown-toggle');
 
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link (except dropdown toggle)
-        navLinks.querySelectorAll('a:not(.dropdown-toggle)').forEach(link => {
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navLinks.classList.remove('active');
             });
-        });
-
-        // Mobile dropdown toggle
-        dropdownToggle.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                dropdown.classList.toggle('active');
-            }
         });
     </script>
 </body>

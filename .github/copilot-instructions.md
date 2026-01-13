@@ -14,8 +14,11 @@ Concise, actionable guidance for AI coding agents working on this repository —
   - **Index gallery**: Mobile (≤768px) loads `-1` from `thumbs/`, desktop/tablet loads `-2` from `main/`
   - **Detail pages**: Tablet/mobile (≤1280px) loads `-2` from `main/`, desktop loads `-3` from `full/`
   - Image switching handled by JavaScript on window resize
-- **Automated aspect ratio system**: Detail pages use data attributes (`data-image`, `data-ratio`) with JavaScript that auto-builds background-image divs and applies aspect ratios programmatically
-- **Navigation**: Dropdown menu in navbar (`<li class="dropdown">`) lists all artworks — must be updated in both [index.html](index.html) AND all pages in `image-pages/` when adding new artwork
+- **Automated aspect ratio system**: Detail pages use data attributes (`data-image`, `data-dims`) with JavaScript that auto-builds background-image divs and calculates aspect ratios from dimensions (`6000 x 6000px` → ratio computed programmatically)
+- **Navigation**: 
+  - **Desktop**: Dropdown menu in navbar (`<li class="dropdown">`) lists all artworks
+  - **Mobile**: Hamburger menu (`<button class="hamburger">`) toggles `.active` class on `.nav-links`
+  - **Critical**: Dropdown menu must be updated in BOTH [index.html](index.html) AND all pages in `image-pages/` when adding new artwork
 - **Page templates** (located in `z - working/` folder and `image-pages/` for reference):
   - **Current approach**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven with inline NFT data in `<script>` block
   - [z - working/text-template.html](z - working/text-template.html): Text content template for artwork descriptions with section structure guide
@@ -50,6 +53,11 @@ python -m http.server 8000
 # Open http://localhost:8000/index.html
 ```
 **Debugging**: Open DevTools, check Console for JS errors and Network tab for 404s (missing images).
+
+**Bulk automation scripts** (PowerShell): Several utility scripts exist in repo root for batch operations:
+- `fix-aspect-ratios.ps1`, `fix-pages.ps1`, `fix-remaining-pages.ps1` — automated page updates
+- `add-hamburger.ps1` — add mobile navigation to pages
+- Use with caution; review changes before committing
 
 ## Project-specific conventions
 1. **Adding new artwork**: 
@@ -89,6 +97,45 @@ python -m http.server 8000
 - **Background**: Page uses `url(../images/page-background-02.jpg)` with `background-size: cover`
 
 ## Examples from codebase
+**Responsive image switching on gallery** ([index.html](index.html#L208-L230)):
+```javascript
+function updateGalleryImages() {
+    const galleryImages = document.querySelectorAll('.gallery .thumb img');
+    const isMobile = window.innerWidth <= 768;
+    
+    galleryImages.forEach(img => {
+        const src = img.src;
+        const filename = src.substring(src.lastIndexOf('/') + 1);
+        const basename = filename.replace(/-[12]\.jpg$/, '');
+        
+        if (isMobile) {
+            img.src = `images/thumbs/${basename}-1.jpg`;
+        } else {
+            img.src = `images/main/${basename}-2.jpg`;
+        }
+    });
+}
+```
+
+**Mobile hamburger menu** ([index.html](index.html#L237-L254)):
+```javascript
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+});
+
+// Mobile dropdown toggle
+dropdownToggle.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+        e.preventDefault();
+        dropdown.classList.toggle('active');
+    }
+});
+```
+
 **Lightbox implementation** ([index.html](index.html)):
 ```html
 <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
@@ -107,6 +154,29 @@ python -m http.server 8000
 - Image displayed: `<img src="../images/full/a-forest-3.jpg">` (using relative path from subdirectory)
 - Back link: `<a href="../index.html">← Back to Gallery</a>`
 - Uses JS to dynamically populate content from inline `nfts` array in `<script>` block (in newer template approach)
+
+**Aspect ratio calculation** ([image-pages/a-forest.html](image-pages/a-forest.html#L139-L155)):
+```javascript
+function initAspectRatioImages() {
+    const wrappers = document.querySelectorAll(".nft-image-wrapper");
+    
+    wrappers.forEach(wrapper => {
+        const imgUrl = wrapper.dataset.image;
+        const dims = wrapper.dataset.dims;
+        
+        // Calculate aspect ratio from dimensions
+        if (dims) {
+            const match = dims.match(/(\d+)\s*x\s*(\d+)/i);
+            if (match) {
+                const width = parseInt(match[1]);
+                const height = parseInt(match[2]);
+                const ratio = width / height;
+                wrapper.style.aspectRatio = ratio;
+            }
+        }
+    });
+}
+```
 
 **CSS color variables** ([css/style.css](css/style.css#L4-L11)):
 ```css
