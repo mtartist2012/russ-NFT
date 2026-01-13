@@ -23,10 +23,10 @@
                     <a href="#" class="dropdown-toggle">Images</a>
                     <div class="dropdown-menu">
                         <a href="a-forest.html">a forest</a>
-                        <a href="a-quiet-escape.html">a quiet escape</a>
+                        <a href="blue-redux.html">Blue Redux</a>
                         <a href="moving-on.html">moving on</a>
                         <a href="cloud-background.html">Cloud background</a>
-                        <a href="blue-redux.html">Blue Redux</a>
+                        <a href="a-quiet-escape.html">a quiet escape</a>
                         <a href="cowboy-in-the-woods.html">Cowboy in the woods</a>
                         <a href="cowgirl-in-the-sand.html">Cowgirl in the sand</a>
                         <a href="fight-or-flight.html">fight or flight</a>
@@ -67,8 +67,18 @@
         <img id="lb-img" src="">
     </div>
 
+    <script src="../staging list.js"></script>
     <script>
-        const nfts = [
+        // Find this specific artwork from the staging list
+        const currentNFT = nfts.find(nft => nft.title === "Cowboy in the woods");
+        const nftArray = currentNFT ? [currentNFT] : [];
+
+        const root = document.getElementById('gallery-root');
+        
+        nftArray.forEach((nft, idx) => {
+            const section = document.createElement('section');
+            section.className = 'nft-row';
+            section.innerHTML = `
     { 
         title: "Cowboy in the woods",
         desc: "A lone cowboy figure set against layered woodland textures, blending Americana symbolism with contemporary digital collage and psychological storytelling.", 
@@ -76,6 +86,7 @@
         dims: "6000 x 6000px", 
         file: "../images/full/Cowboy-in-the-woods-3.jpg",
         price: "NFT listing",
+        quote: "Placeholder quote text for this artwork will be replaced with actual content from uploaded file later.",
         themes: "Americana symbolism, solitude, psychological storytelling, nature and mythology",
         analysis: "ctc",
         collector: "First edition NFT; RVL signature; part of the 2025 series.",
@@ -91,6 +102,7 @@
             const section = document.createElement('section');
             section.className = 'nft-row';
             section.innerHTML = `
+                    <!-- RIGHT COLUMN (text on large screens) -->
                     <div class="text-block">
                         <h1>${nft.title}</h1>
                         
@@ -121,51 +133,86 @@
                             <a href="#" target="_blank" class="price-btn">${nft.price}</a>
                         </p>
                         
-                        <a href="../index.html" class="back-link">← Back to Gallery</a>
+                        <div class="nav-links-bottom">
+                            <a href="a-quiet-escape.html">Previous</a>
+                            <span class="nav-separator">|</span>
+                            <a href="../index.html">Gallery</a>
+                            <span class="nav-separator">|</span>
+                            <a href="cowgirl-in-the-sand.html">Next</a>
+                        </div>
                     </div>
                     
-                    <div class="nft-image-wrap">
-                        <img src="${nft.file}"
-                             alt="${nft.title} — digital artwork by russNFT"
-                             onclick="openLB('${nft.file}')">
-                        <div class="image-meta">
+                    <div class="image-column">
+                    <!-- LEFT COLUMN (image on large screens) -->
+                    <div class="nft-image-wrapper" 
+                         data-image="${nft.file}" 
+                         data-ratio="16/9"
+                         onclick="openLB('${nft.file}')">
+                    </div>
+                    <div class="image-meta">
                             <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
                         </div>
-                        <a href="cowgirl-in-the-sand.html" class="next-link">Next Image →</a>
+                        <div class="quote-block">${nft.quote || ''}</div>
                     </div>
             `;
             root.appendChild(section);
         });
+
+        // Initialize aspect ratio image system
+        function initAspectRatioImages() {
+            const wrappers = document.querySelectorAll(".nft-image-wrapper");
+            
+            wrappers.forEach(wrapper => {
+                const imgUrl = wrapper.dataset.image;
+                const ratio = wrapper.dataset.ratio;
+                
+                wrapper.style.aspectRatio = ratio;
+                
+                const bg = document.createElement("div");
+                bg.className = "nft-image";
+                // Adjust path for staging list (which uses 'images/full/...' not '../images/full/...')
+                const adjustedUrl = imgUrl.startsWith('images/') ? '../' + imgUrl : imgUrl;
+                bg.style.backgroundImage = `url('${adjustedUrl}')`;
+                
+                const overlay = document.createElement("img");
+                overlay.className = "pixel-overlay";
+                overlay.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+                overlay.alt = "";
+                overlay.draggable = false;
+                
+                wrapper.appendChild(bg);
+                wrapper.appendChild(overlay);
+            });
+        }
 
         function openLB(src) {
             document.getElementById('lb-img').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        // Responsive image switching for detail pages
         function updateDetailImage() {
-            const detailImage = document.querySelector('.nft-image-wrap img');
-            if (!detailImage) return;
+            const wrappers = document.querySelectorAll('.nft-image-wrapper');
+            if (!wrappers.length) return;
             
             const isTabletOrMobile = window.innerWidth <= 1280;
-            const src = detailImage.src;
-            const filename = src.substring(src.lastIndexOf('/') + 1);
-            const basename = filename.replace(/-[23]\.jpg$/, '');
             
-            if (isTabletOrMobile) {
-                // Use -2 images from main folder
-                const newSrc = `../images/main/${basename}-2.jpg`;
-                detailImage.src = newSrc;
-                detailImage.setAttribute('onclick', `openLB('${newSrc}')`);
-            } else {
-                // Use -3 images from full folder
-                const newSrc = `../images/full/${basename}-3.jpg`;
-                detailImage.src = newSrc;
-                detailImage.setAttribute('onclick', `openLB('${newSrc}')`);
-            }
+            wrappers.forEach(wrapper => {
+                const src = wrapper.dataset.image;
+                const filename = src.substring(src.lastIndexOf('/') + 1);
+                const basename = filename.replace(/-[23]\.jpg$/, '');
+                
+                let newSrc = isTabletOrMobile 
+                    ? `../images/main/${basename}-2.jpg`
+                    : `../images/full/${basename}-3.jpg`;
+                
+                wrapper.dataset.image = newSrc;
+                wrapper.setAttribute('onclick', `openLB('${newSrc}')`);
+                const bgDiv = wrapper.querySelector('.nft-image');
+                if (bgDiv) bgDiv.style.backgroundImage = `url('${newSrc}')`;
+            });
         }
 
-        // Run on load and resize
+        initAspectRatioImages();
         updateDetailImage();
         window.addEventListener('resize', updateDetailImage);
     </script>

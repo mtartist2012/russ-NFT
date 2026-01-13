@@ -14,13 +14,14 @@ Concise, actionable guidance for AI coding agents working on this repository —
   - **Index gallery**: Mobile (≤768px) loads `-1` from `thumbs/`, desktop/tablet loads `-2` from `main/`
   - **Detail pages**: Tablet/mobile (≤1280px) loads `-2` from `main/`, desktop loads `-3` from `full/`
   - Image switching handled by JavaScript on window resize
+- **Automated aspect ratio system**: Detail pages use data attributes (`data-image`, `data-ratio`) with JavaScript that auto-builds background-image divs and applies aspect ratios programmatically
 - **Navigation**: Dropdown menu in navbar (`<li class="dropdown">`) lists all artworks — must be updated in both [index.html](index.html) AND all pages in `image-pages/` when adding new artwork
-- **Page templates** (located in `z - working/` folder):
-  - [z - working/new-image-template.html](z - working/new-image-template.html): JS-driven gallery with inline NFT data in `<script>` block — **migrating to this approach**
-  - `image-pages/*.html`: Legacy static HTML pages (being phased out in favor of JS-driven approach)
-  - [z - working/text-template.html](z - working/text-template.html): Text content template for artwork descriptions
+- **Page templates** (located in `z - working/` folder and `image-pages/` for reference):
+  - **Current approach**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven with inline NFT data in `<script>` block
+  - [z - working/text-template.html](z - working/text-template.html): Text content template for artwork descriptions with section structure guide
   - [z - working/one-image.css](z - working/one-image.css): Alternative CSS layout (not currently in production)
   - [z - working/new-hub.html](z - working/new-hub.html): Alternative gallery hub layout
+  - [staging list.js](staging list.js) (root level): NFT metadata source with complete artwork data (title, desc, date, dims, aspectRatio, themes, etc.)
 - **Lightbox**: Inline JS (`openLB()` function) handles click-to-zoom; DOM: `<div class="lightbox" id="lightbox" onclick="this.style.display='none'">` — click anywhere to close
 
 ## Critical file structures
@@ -34,12 +35,12 @@ image-pages/  → individual artwork detail pages (JS-driven with responsive ima
 css/
   style.css   → main styling for ALL pages (gallery + detail pages)
 z - working/  → templates and experimental layouts
-  new-image-template.html → JS-driven detail page template
   text-template.html      → content structure guide
   one-image.css           → alternative layout CSS (not in production)
   new-hub.html            → alternative gallery hub
 qr-codes/
   ASF-qr-codes/ → QR code assets
+staging list.js → NFT metadata source (root level)
 ```
 
 ## Developer workflow
@@ -67,15 +68,14 @@ python -m http.server 8000
    - **Case sensitivity**: Image filenames in `images/full/` and `images/thumbs/` mix uppercase and lowercase (e.g., `All-American-3.jpg`, `a-forest-1.jpg`). Match exact case when referencing images.
 
 2. **Templates usage**:
-   - **Primary template**: Use [z - working/new-image-template.html](z - working/new-image-template.html) for new artwork pages — JS-driven with inline NFT data in `<script>` block
-   - Legacy pages in `image-pages/` folder use static HTML (being migrated to JS approach)
+   - **Primary template**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven with inline NFT data in `<script>` block
    - [z - working/text-template.html](z - working/text-template.html) provides text structure for artwork descriptions
-   - [z - working/staging list.js](z - working/staging list.js) holds NFT metadata (title, desc, date, dims) for JS-driven galleries
+   - [staging list.js](staging list.js) holds NFT metadata (title, desc, date, dims, aspectRatio, themes, etc.) — source of truth for artwork data
    - [z - working/new-hub.html](z - working/new-hub.html) is an alternative gallery hub layout
    - **Detail page structure**: Each artwork page includes Themes, Analysis, Collector Notes/Provenance, Series Context, Artist Notes, and Keywords sections
 
 3. **Path references critical detail**: 
-   - From root (e.g., [index.html](index.html), [z - working/new-image-template.html](z - working/new-image-template.html)): Use `images/full/<name>-3.jpg`
+   - From root (e.g., [index.html](index.html)): Use `images/full/<name>-3.jpg`
    - From `image-pages/` subdirectory: Use `../images/full/<name>-3.jpg` and `../css/style.css` (relative paths)
    - **Current implementation**: All existing pages in `image-pages/` correctly use `../` prefix for CSS and images
 
