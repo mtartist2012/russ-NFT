@@ -1,74 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>by my side - digital collage by RUSSNFT</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Droid+Sans:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
+# Fix remaining 16 broken image pages with corrupted JavaScript
 
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="../index.html" class="logo">RUSS NFT</a>
-            <ul class="nav-links">
-                <li><a href="../index.html">Gallery</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Images</a>
-                    <div class="dropdown-menu">
-                        <a href="a-forest.html">a forest</a>
-                        <a href="blue-redux.html">Blue Redux</a>
-                        <a href="moving-on.html">moving on</a>
-                        <a href="cloud-background.html">Cloud background</a>
-                        <a href="a-quiet-escape.html">a quiet escape</a>
-                        <a href="cowboy-in-the-woods.html">Cowboy in the woods</a>
-                        <a href="cowgirl-in-the-sand.html">Cowgirl in the sand</a>
-                        <a href="fight-or-flight.html">fight or flight</a>
-                        <a href="golden-desire.html">Golden Desire</a>
-                        <a href="in-the-land-of-green-and-red.html">in the land of green and red</a>
-                        <a href="in-the-land-of-indecisions.html">in the land of indecisions</a>
-                        <a href="in-the-land-of-make-believe.html">in the land of make believe</a>
-                        <a href="in-the-land-of-pink-and-grey.html">in the land of pink and grey</a>
-                        <a href="like-father-like-son.html">Like Father, Like Son</a>
-                        <a href="the-dollar-is-our-king.html">The dollar is our king</a>
-                        <a href="kline-again.html">Kline again</a>
-                        <a href="vulture-values.html">vulture values</a>
-                        <a href="all-american.html">All American</a>
-                        <a href="by-my-side.html">by my side</a>
-                        <a href="everything-you-want-me-to.html">everything you want me to</a>
-                        <a href="ease-my-worried-mind.html">ease my worried mind</a>
-                        <a href="thunderhead-melody.html">Thunderhead Melody</a>
-                        <a href="red-room.html">Red room</a>
-                        <a href="make-room.html">Make room</a>
-                    </div>
-                </li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+$fixes = @(
+    @{ file = "fight-or-flight.html"; title = "fight or flight"; prev = "cowgirl-in-the-sand.html"; next = "golden-desire.html"; ratio = "1/1" },
+    @{ file = "golden-desire.html"; title = "Golden Desire"; prev = "fight-or-flight.html"; next = "in-the-land-of-green-and-red.html"; ratio = "1/1" },
+    @{ file = "in-the-land-of-green-and-red.html"; title = "in the land of green and red"; prev = "golden-desire.html"; next = "in-the-land-of-indecisions.html"; ratio = "16/9" },
+    @{ file = "in-the-land-of-indecisions.html"; title = "in the land of indecisions"; prev = "in-the-land-of-green-and-red.html"; next = "in-the-land-of-make-believe.html"; ratio = "16/9" },
+    @{ file = "in-the-land-of-make-believe.html"; title = "in the land of make believe"; prev = "in-the-land-of-indecisions.html"; next = "in-the-land-of-pink-and-grey.html"; ratio = "16/9" },
+    @{ file = "in-the-land-of-pink-and-grey.html"; title = "in the land of pink and gray"; prev = "in-the-land-of-make-believe.html"; next = "like-father-like-son.html"; ratio = "16/9" },
+    @{ file = "like-father-like-son.html"; title = "Like Father, Like Son"; prev = "in-the-land-of-pink-and-grey.html"; next = "the-dollar-is-our-king.html"; ratio = "16/9" },
+    @{ file = "the-dollar-is-our-king.html"; title = "The dollar is our king"; prev = "like-father-like-son.html"; next = "kline-again.html"; ratio = "16/9" },
+    @{ file = "kline-again.html"; title = "Kline again"; prev = "the-dollar-is-our-king.html"; next = "vulture-values.html"; ratio = "8/5" },
+    @{ file = "vulture-values.html"; title = "vulture values"; prev = "kline-again.html"; next = "all-american.html"; ratio = "8/5" },
+    @{ file = "all-american.html"; title = "All American"; prev = "vulture-values.html"; next = "by-my-side.html"; ratio = "8/5" },
+    @{ file = "by-my-side.html"; title = "by my side"; prev = "all-american.html"; next = "everything-you-want-me-to.html"; ratio = "4/3" },
+    @{ file = "everything-you-want-me-to.html"; title = "everything you want me to"; prev = "by-my-side.html"; next = "ease-my-worried-mind.html"; ratio = "4/3" },
+    @{ file = "ease-my-worried-mind.html"; title = "ease my worried mind"; prev = "everything-you-want-me-to.html"; next = "thunderhead-melody.html"; ratio = "4/3" },
+    @{ file = "thunderhead-melody.html"; title = "Thunderhead Melody"; prev = "ease-my-worried-mind.html"; next = "red-room.html"; ratio = "4/3" },
+    @{ file = "make-room.html"; title = "Make room"; prev = "red-room.html"; next = "a-forest.html"; ratio = "4/3" }
+)
 
-    <header class="page-header banner-pages">
-        <div class="container">
-            <h1>digital bricollage</h1>
-            <p class="tagline">new work for the 4K age</p>
-        </div>
-    </header>
-
-    <main class="container" id="gallery-root"></main>
-
-    <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
-        <img id="lb-img" src="">
-    </div>
-
-        <script src="../staging list.js"></script>
+$correctScript = @'
+    <script src="../staging list.js"></script>
     <script>
         // Find this specific artwork from the staging list
-        const currentNFT = nfts.find(nft => nft.title === "by my side");
+        const currentNFT = nfts.find(nft => nft.title === "TITLE_PLACEHOLDER");
         const nftArray = currentNFT ? [currentNFT] : [];
 
         const root = document.getElementById('gallery-root');
@@ -109,11 +64,11 @@
                         </p>
                         
                         <div class="nav-links-bottom">
-                            <a href="all-american.html">Previous</a>
+                            <a href="PREV_PLACEHOLDER">Previous</a>
                             <span class="nav-separator">|</span>
                             <a href="../index.html">Gallery</a>
                             <span class="nav-separator">|</span>
-                            <a href="everything-you-want-me-to.html">Next</a>
+                            <a href="NEXT_PLACEHOLDER">Next</a>
                         </div>
                     </div>
                     
@@ -121,7 +76,7 @@
                     <!-- LEFT COLUMN (image on large screens) -->
                     <div class="nft-image-wrapper" 
                          data-image="${nft.file}" 
-                         data-ratio="4/3"
+                         data-ratio="RATIO_PLACEHOLDER"
                          onclick="openLB('${nft.file}')">
                     </div>
                     <div class="image-meta">
@@ -193,34 +148,28 @@
     </script>
 
     <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-section">
-                <h3>RUSS NFT</h3>
-                <p>Unlocking the potential of digital art for the 4K age</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="../index.html">Gallery</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Discord</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p>&copy; 2026 RUSS NFT. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+'@
 
-</body>
-</html>
+foreach ($fix in $fixes) {
+    $filePath = "image-pages\$($fix.file)"
+    Write-Host "Fixing $filePath..."
+    
+    $content = Get-Content "$($fix.file)" -Raw
+    
+    # Replace the script section (from <script src="../staging list.js"> to <footer class="footer">)
+    $pattern = '(?s)<script src="\.\./staging list\.js"></script>.*?<footer class="footer">'
+    
+    $replacement = $correctScript `
+        -replace 'TITLE_PLACEHOLDER', $fix.title `
+        -replace 'PREV_PLACEHOLDER', $fix.prev `
+        -replace 'NEXT_PLACEHOLDER', $fix.next `
+        -replace 'RATIO_PLACEHOLDER', $fix.ratio
+    
+    $newContent = $content -replace $pattern, $replacement
+    
+    $newContent | Set-Content "$($fix.file)" -NoNewline
+    
+    Write-Host "Fixed $($fix.file)" -ForegroundColor Green
+}
+
+Write-Host "`nAll 16 remaining files have been fixed!" -ForegroundColor Cyan

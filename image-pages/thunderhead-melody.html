@@ -65,7 +65,7 @@
         <img id="lb-img" src="">
     </div>
 
-    <script src="../staging list.js"></script>
+        <script src="../staging list.js"></script>
     <script>
         // Find this specific artwork from the staging list
         const currentNFT = nfts.find(nft => nft.title === "Thunderhead Melody");
@@ -74,30 +74,6 @@
         const root = document.getElementById('gallery-root');
         
         nftArray.forEach((nft, idx) => {
-            const section = document.createElement('section');
-            section.className = 'nft-row';
-            section.innerHTML = `
-           
-    { 
-        title: "thunderhead melody",
-        desc: "A storm-charged digital composition where thunderhead forms become musical, blending atmospheric drama with rhythmic layering and emotional resonance.", 
-        date: "2025", 
-        dims: "6000 x 6000px", 
-        file: "../images/full/Thunderhead-Melody-3.jpg",
-        price: "NFT listing",
-        quote: "Placeholder quote text for this artwork will be replaced with actual content from uploaded file later.",
-        themes: "This piece explores atmospheric drama and rhythmic energy through storm-charged forms, merging visual and musical symbolism to create an emotionally resonant composition.",
-        analysis: "ctc",
-        collector: "First edition NFT; RVL signature; part of the 2025 series.",
-        series: "ctc",
-        artistNotes: "ctc",
-        keywords: ["storm symbolism", "thunderhead art", "rhythmic digital collage", "atmospheric drama", "RVL digital art"]
-    },
-                   ];
-
-        const root = document.getElementById('gallery-root');
-        
-        nfts.forEach((nft, idx) => {
             const section = document.createElement('section');
             section.className = 'nft-row';
             section.innerHTML = `
@@ -120,7 +96,7 @@
                         <p>${nft.series || 'ctc'}</p>
                         
                         <div class="section-title">Artist Notes</div>
-                        <p>${nft.artistNotes || 'ctc'}</p>
+                        <p>${nft.artistNotes || ''}</p>
                         
                         <div class="section-title">Keywords</div>
                         <ul>
@@ -145,13 +121,13 @@
                     <!-- LEFT COLUMN (image on large screens) -->
                     <div class="nft-image-wrapper" 
                          data-image="${nft.file}" 
-                         data-ratio="16/9"
+                         data-ratio="4/3"
                          onclick="openLB('${nft.file}')">
                     </div>
                     <div class="image-meta">
-                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
-                        </div>
-                        <div class="quote-block">${nft.quote || ''}</div>
+                        <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                    </div>
+                    <div class="quote-block">${nft.quote || ''}</div>
                     </div>
             `;
             root.appendChild(section);

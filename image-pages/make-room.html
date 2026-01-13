@@ -65,7 +65,7 @@
         <img id="lb-img" src="">
     </div>
 
-    <script src="../staging list.js"></script>
+        <script src="../staging list.js"></script>
     <script>
         // Find this specific artwork from the staging list
         const currentNFT = nfts.find(nft => nft.title === "Make room");
@@ -74,30 +74,6 @@
         const root = document.getElementById('gallery-root');
         
         nftArray.forEach((nft, idx) => {
-            const section = document.createElement('section');
-            section.className = 'nft-row';
-            section.innerHTML = `
-           
-    { 
-        title: "make room",
-        desc: "A digital study of expansion and possibility, using layered forms and symbolic openings to explore the emotional act of creating space for change.", 
-        date: "2025", 
-        dims: "4200 x 3000px", 
-        file: "../images/full/Make-room-3.jpg",
-        price: "NFT listing",
-        quote: "Placeholder quote text for this artwork will be replaced with actual content from uploaded file later.",
-        themes: "This piece explores expansion and emotional possibility through layered forms and symbolic openings, capturing the transformative act of creating space for change and growth.",
-        analysis: "ctc",
-        collector: "First edition NFT; RVL signature; part of the 2025 series.",
-        series: "ctc",
-        artistNotes: "ctc",
-        keywords: ["expansion symbolism", "emotional possibility", "layered openings", "digital abstraction", "RVL digital art"]
-    },
-                   ];
-
-        const root = document.getElementById('gallery-root');
-        
-        nfts.forEach((nft, idx) => {
             const section = document.createElement('section');
             section.className = 'nft-row';
             section.innerHTML = `
@@ -120,7 +96,7 @@
                         <p>${nft.series || 'ctc'}</p>
                         
                         <div class="section-title">Artist Notes</div>
-                        <p>${nft.artistNotes || 'ctc'}</p>
+                        <p>${nft.artistNotes || ''}</p>
                         
                         <div class="section-title">Keywords</div>
                         <ul>
@@ -145,13 +121,13 @@
                     <!-- LEFT COLUMN (image on large screens) -->
                     <div class="nft-image-wrapper" 
                          data-image="${nft.file}" 
-                         data-ratio="16/9"
+                         data-ratio="4/3"
                          onclick="openLB('${nft.file}')">
                     </div>
                     <div class="image-meta">
-                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
-                        </div>
-                        <div class="quote-block">${nft.quote || ''}</div>
+                        <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                    </div>
+                    <div class="quote-block">${nft.quote || ''}</div>
                     </div>
             `;
             root.appendChild(section);

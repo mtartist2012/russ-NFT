@@ -65,7 +65,7 @@
         <img id="lb-img" src="">
     </div>
 
-    <script src="../staging list.js"></script>
+        <script src="../staging list.js"></script>
     <script>
         // Find this specific artwork from the staging list
         const currentNFT = nfts.find(nft => nft.title === "in the land of pink and gray");
@@ -74,30 +74,6 @@
         const root = document.getElementById('gallery-root');
         
         nftArray.forEach((nft, idx) => {
-            const section = document.createElement('section');
-            section.className = 'nft-row';
-            section.innerHTML = `
-           
-    { 
-        title: "in the land of pink and grey",
-        desc: "A soft yet complex digital landscape balancing pink warmth and grey restraint, exploring emotional duality through layered textures and symbolic color play.", 
-        date: "2025", 
-        dims: "6000 x 6000px", 
-        file: "../images/full/in-the-land-of-pink-and-grey-3.jpg",
-        price: "NFT listing",
-        quote: "Placeholder quote text for this artwork will be replaced with actual content from uploaded file later.",
-        themes: "This piece explores emotional duality through the balance of pink warmth and grey restraint, creating a soft yet complex landscape of layered textures and symbolic color interactions.",
-        analysis: "ctc",
-        collector: "First edition NFT; RVL signature; part of the 2025 series.",
-        series: "ctc",
-        artistNotes: "ctc",
-        keywords: ["pink and grey art", "emotional duality", "soft digital landscape", "symbolic color study", "RVL digital art"]
-    },
-                   ];
-
-        const root = document.getElementById('gallery-root');
-        
-        nfts.forEach((nft, idx) => {
             const section = document.createElement('section');
             section.className = 'nft-row';
             section.innerHTML = `
@@ -120,7 +96,7 @@
                         <p>${nft.series || 'ctc'}</p>
                         
                         <div class="section-title">Artist Notes</div>
-                        <p>${nft.artistNotes || 'ctc'}</p>
+                        <p>${nft.artistNotes || ''}</p>
                         
                         <div class="section-title">Keywords</div>
                         <ul>
@@ -149,9 +125,9 @@
                          onclick="openLB('${nft.file}')">
                     </div>
                     <div class="image-meta">
-                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
-                        </div>
-                        <div class="quote-block">${nft.quote || ''}</div>
+                        <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                    </div>
+                    <div class="quote-block">${nft.quote || ''}</div>
                     </div>
             `;
             root.appendChild(section);

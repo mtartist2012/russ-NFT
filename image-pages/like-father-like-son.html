@@ -65,7 +65,7 @@
         <img id="lb-img" src="">
     </div>
 
-    <script src="../staging list.js"></script>
+        <script src="../staging list.js"></script>
     <script>
         // Find this specific artwork from the staging list
         const currentNFT = nfts.find(nft => nft.title === "Like Father, Like Son");
@@ -74,30 +74,6 @@
         const root = document.getElementById('gallery-root');
         
         nftArray.forEach((nft, idx) => {
-            const section = document.createElement('section');
-            section.className = 'nft-row';
-            section.innerHTML = `
-           
-    { 
-        title: "like father like son",
-        desc: "A generational reflection rendered in digital collage, exploring inheritance, identity, and emotional echoes between father and son through symbolic layering.", 
-        date: "2025", 
-        dims: "6000 x 6000px", 
-        file: "../images/full/Like-Father-Like-Son-3.jpg",
-        price: "NFT listing",
-        quote: "Placeholder quote text for this artwork will be replaced with actual content from uploaded file later.",
-        themes: "This piece explores generational inheritance and identity through symbolic layering, capturing the emotional echoes and patterns passed between father and son.",
-        analysis: "ctc",
-        collector: "First edition NFT; RVL signature; part of the 2025 series.",
-        series: "ctc",
-        artistNotes: "ctc",
-        keywords: ["generational art", "identity symbolism", "father and son", "layered digital collage", "RVL digital art"]
-    },
-                   ];
-
-        const root = document.getElementById('gallery-root');
-        
-        nfts.forEach((nft, idx) => {
             const section = document.createElement('section');
             section.className = 'nft-row';
             section.innerHTML = `
@@ -120,7 +96,7 @@
                         <p>${nft.series || 'ctc'}</p>
                         
                         <div class="section-title">Artist Notes</div>
-                        <p>${nft.artistNotes || 'ctc'}</p>
+                        <p>${nft.artistNotes || ''}</p>
                         
                         <div class="section-title">Keywords</div>
                         <ul>
@@ -149,9 +125,9 @@
                          onclick="openLB('${nft.file}')">
                     </div>
                     <div class="image-meta">
-                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
-                        </div>
-                        <div class="quote-block">${nft.quote || ''}</div>
+                        <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                    </div>
+                    <div class="quote-block">${nft.quote || ''}</div>
                     </div>
             `;
             root.appendChild(section);
