@@ -1,76 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>a quiet escape — RVL Digital Artwork</title>
-    <meta name="description" content="A quiet escape into soft color fields and drifting forms, offering a moment of stillness and emotional release within a subtly constructed digital landscape.">
-    <meta name="keywords" content="quiet escape, soft color fields, stillness, emotional release, digital landscape, RVL digital art">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Droid+Sans:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
+# Fix broken image pages with corrupted JavaScript
 
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="../index.html" class="logo">RUSS NFT</a>
-            <ul class="nav-links">
-                <li><a href="../index.html">Gallery</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Images</a>
-                    <div class="dropdown-menu">
-                        <a href="a-forest.html">a forest</a>
-                        <a href="blue-redux.html">Blue Redux</a>
-                        <a href="moving-on.html">moving on</a>
-                        <a href="cloud-background.html">Cloud background</a>
-                        <a href="a-quiet-escape.html">a quiet escape</a>
-                        <a href="cowboy-in-the-woods.html">Cowboy in the woods</a>
-                        <a href="cowgirl-in-the-sand.html">Cowgirl in the sand</a>
-                        <a href="fight-or-flight.html">fight or flight</a>
-                        <a href="golden-desire.html">Golden Desire</a>
-                        <a href="in-the-land-of-green-and-red.html">in the land of green and red</a>
-                        <a href="in-the-land-of-indecisions.html">in the land of indecisions</a>
-                        <a href="in-the-land-of-make-believe.html">in the land of make believe</a>
-                        <a href="in-the-land-of-pink-and-grey.html">in the land of pink and grey</a>
-                        <a href="like-father-like-son.html">Like Father, Like Son</a>
-                        <a href="the-dollar-is-our-king.html">The dollar is our king</a>
-                        <a href="kline-again.html">Kline again</a>
-                        <a href="vulture-values.html">vulture values</a>
-                        <a href="all-american.html">All American</a>
-                        <a href="by-my-side.html">by my side</a>
-                        <a href="everything-you-want-me-to.html">everything you want me to</a>
-                        <a href="ease-my-worried-mind.html">ease my worried mind</a>
-                        <a href="thunderhead-melody.html">Thunderhead Melody</a>
-                        <a href="red-room.html">Red room</a>
-                        <a href="make-room.html">Make room</a>
-                    </div>
-                </li>
-                <li><a href="../about.html">About</a></li>
-                <li><a href="../contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+$fixes = @(
+    @{ file = "blue-redux.html"; title = "Blue Redux"; prev = "a-forest.html"; next = "moving-on.html"; ratio = "1/1" },
+    @{ file = "moving-on.html"; title = "moving on"; prev = "blue-redux.html"; next = "cloud-background.html"; ratio = "1/1" },
+    @{ file = "cloud-background.html"; title = "Cloud background"; prev = "moving-on.html"; next = "a-quiet-escape.html"; ratio = "1/1" },
+    @{ file = "a-quiet-escape.html"; title = "a quiet escape"; prev = "cloud-background.html"; next = "cowboy-in-the-woods.html"; ratio = "1/1" },
+    @{ file = "cowboy-in-the-woods.html"; title = "Cowboy in the woods"; prev = "a-quiet-escape.html"; next = "cowgirl-in-the-sand.html"; ratio = "1/1" },
+    @{ file = "cowgirl-in-the-sand.html"; title = "Cowgirl in the sand"; prev = "cowboy-in-the-woods.html"; next = "fight-or-flight.html"; ratio = "1/1" }
+)
 
-    <header class="page-header banner-pages">
-        <div class="container">
-            <h1>digital bricollage</h1>
-            <p class="tagline">new work for the 4K age</p>
-        </div>
-    </header>
-
-    <main class="container" id="gallery-root"></main>
-
-    <div class="lightbox" id="lightbox" onclick="this.style.display='none'">
-        <img id="lb-img" src="">
-    </div>
-
-        <script src="../staging list.js"></script>
+$correctScript = @'
+    <script src="../staging list.js"></script>
     <script>
         // Find this specific artwork from the staging list
-        const currentNFT = nfts.find(nft => nft.title === "a quiet escape");
+        const currentNFT = nfts.find(nft => nft.title === "TITLE_PLACEHOLDER");
         const nftArray = currentNFT ? [currentNFT] : [];
 
         const root = document.getElementById('gallery-root');
@@ -111,11 +54,11 @@
                         </p>
                         
                         <div class="nav-links-bottom">
-                            <a href="cloud-background.html">Previous</a>
+                            <a href="PREV_PLACEHOLDER">Previous</a>
                             <span class="nav-separator">|</span>
                             <a href="../index.html">Gallery</a>
                             <span class="nav-separator">|</span>
-                            <a href="cowboy-in-the-woods.html">Next</a>
+                            <a href="NEXT_PLACEHOLDER">Next</a>
                         </div>
                     </div>
                     
@@ -123,7 +66,7 @@
                     <!-- LEFT COLUMN (image on large screens) -->
                     <div class="nft-image-wrapper" 
                          data-image="${nft.file}" 
-                         data-ratio="1/1"
+                         data-ratio="RATIO_PLACEHOLDER"
                          onclick="openLB('${nft.file}')">
                     </div>
                     <div class="image-meta">
@@ -195,34 +138,28 @@
     </script>
 
     <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-section">
-                <h3>RUSS NFT</h3>
-                <p>Unlocking the potential of digital art for the 4K age</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="../index.html">Gallery</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Discord</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <p>&copy; 2026 RUSS NFT. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+'@
 
-</body>
-</html>
+foreach ($fix in $fixes) {
+    $filePath = "image-pages\$($fix.file)"
+    Write-Host "Fixing $filePath..."
+    
+    $content = Get-Content $filePath -Raw
+    
+    # Replace the script section (from <script src="../staging list.js"> to <footer class="footer">)
+    $pattern = '(?s)<script src="\.\./staging list\.js"></script>.*?<footer class="footer">'
+    
+    $replacement = $correctScript `
+        -replace 'TITLE_PLACEHOLDER', $fix.title `
+        -replace 'PREV_PLACEHOLDER', $fix.prev `
+        -replace 'NEXT_PLACEHOLDER', $fix.next `
+        -replace 'RATIO_PLACEHOLDER', $fix.ratio
+    
+    $newContent = $content -replace $pattern, $replacement
+    
+    $newContent | Set-Content $filePath -NoNewline
+    
+    Write-Host "Fixed $($fix.file)" -ForegroundColor Green
+}
+
+Write-Host "`nAll 6 files have been fixed!" -ForegroundColor Cyan
