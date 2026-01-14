@@ -735,6 +735,11 @@ a:hover {
         grid-row: 1 / span 2;
     }
     
+    .left-column-block {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+    
     .nft-image-wrapper {
         grid-column: 1;
         grid-row: 1;
@@ -775,6 +780,12 @@ a:hover {
         row-gap: 0;
         margin-bottom: 6vh;
         padding: 1rem;
+    }
+    
+    .left-column-block {
+        grid-column: 1;
+        grid-row: 1;
+        order: 1;
     }
     
     .text-block {
