@@ -53,21 +53,22 @@
             const section = document.createElement('section');
             section.className = 'nft-row';
             section.innerHTML = `
-                    <!-- RIGHT COLUMN (text on large screens) -->
-
-                    <div class="nft-image-wrapper" 
+                    <div class="left-column-block">
+                        <div class="nft-image-wrapper" 
                              data-image="${nft.file}" 
                              data-dims="${nft.dims}"
                              onclick="openLB('${nft.file}')">
                         </div>
                         
+                        <div class="image-meta">
+                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                        </div>
+                        
+                        <div class="quote-block">${nft.quote || ''}</div>
+                    </div>
                         
                     <div class="text-block">
-
-
                         <h1>${nft.title}</h1>
-                        
-                        
                         
                         <p>${nft.desc}</p>
                         
@@ -102,13 +103,6 @@
                             <span class="nav-separator">|</span>
                             <a href="blue-redux.html">Next</a>
                         </div>
-                    </div>
-                    
-                    <div class="image-column">
-                        <div class="image-meta">
-                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
-                        </div>
-                        <div class="quote-block">${nft.quote || ''}</div>
                     </div>
                     
             `;

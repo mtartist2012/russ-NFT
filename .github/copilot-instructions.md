@@ -15,17 +15,18 @@ Concise, actionable guidance for AI coding agents working on this repository —
   - **Detail pages**: Tablet/mobile (≤1280px) loads `-2` from `main/`, desktop loads `-3` from `full/`
   - Image switching handled by JavaScript on window resize
 - **Automated aspect ratio system**: Detail pages use data attributes (`data-image`, `data-dims`) with JavaScript that auto-builds background-image divs and calculates aspect ratios from dimensions (`6000 x 6000px` → ratio computed programmatically)
+- **Dynamic content rendering**: Detail pages load [staging list.js](staging list.js) and use `nfts.find(nft => nft.title === "artwork-name")` to pull artwork data dynamically, then render HTML via JavaScript DOM manipulation
 - **Navigation**: 
   - **Navbar links**: Simple navigation with gallery/start, about/contact links
-  - **Mobile**: Hamburger menu (`<button class="hamburger">`) toggles `.active` class on `.nav-links`
+  - **Mobile**: Hamburger menu (`<button class="hamburger">`) toggles `.active` class on `.nav-links`; menu auto-closes when links are clicked
   - **Detail pages**: Previous/gallery/next links in navbar and bottom of content section
   - **Note**: No dropdown artwork list in current implementation; users navigate via gallery grid or sequential prev/next links
 - **Page templates** (located in `z - working/` folder and `image-pages/` for reference):
-  - **Current approach**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven with inline NFT data in `<script>` block
+  - **Current approach**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven, loads [staging list.js](staging list.js) and finds artwork by title
   - [z - working/text-template.html](z - working/text-template.html): Text content template for artwork descriptions with section structure guide
   - [z - working/one-image.css](z - working/one-image.css): Alternative CSS layout (not currently in production)
   - [z - working/new-hub.html](z - working/new-hub.html): Alternative gallery hub layout
-  - [staging list.js](staging list.js) (root level): NFT metadata source with complete artwork data (title, desc, date, dims, aspectRatio, themes, etc.)
+  - [staging list.js](staging list.js) (root level): **Source of truth** for all NFT metadata (title, desc, date, dims, aspectRatio, themes, analysis, collector, series, artistNotes, keywords)
 - **Lightbox**: Inline JS (`openLB()` function) handles click-to-zoom; DOM: `<div class="lightbox" id="lightbox" onclick="this.style.display='none'">` — click anywhere to close
 
 ## Critical file structures
@@ -77,11 +78,13 @@ python -m http.server 8000
    - **Case sensitivity**: Image filenames in `images/full/` and `images/thumbs/` mix uppercase and lowercase (e.g., `All-American-3.jpg`, `a-forest-1.jpg`). Match exact case when referencing images.
 
 2. **Templates usage**:
-   - **Primary template**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven with inline NFT data in `<script>` block
-   - [z - working/text-template.html](z - working/text-template.html) provides text structure for artwork descriptions
-   - [staging list.js](staging list.js) holds NFT metadata (title, desc, date, dims, aspectRatio, themes, etc.) — source of truth for artwork data
-   - [z - working/new-hub.html](z - working/new-hub.html) is an alternative gallery hub layout
-   - **Detail page structure**: Each artwork page includes Themes, Analysis, Collector Notes/Provenance, Series Context, Artist Notes, and Keywords sections
+   - **Primary template**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — loads [staging list.js](staging list.js) dynamically
+   - **How detail pages work**: Pages load staging list via `<script src="../staging list.js">`, then find artwork by title: `const currentNFT = nfts.find(nft => nft.title === "a forest");`
+   - [staging list.js](staging list.js) is the **single source of truth** for all artwork metadata — update this file to change artwork data across the site
+   - [z - working/text-template.html](z - working/text-template.html) provides text structure guide for artwork descriptions
+   - [z - working/new-hub.html](z - working/new-hub.html) is an alternative gallery hub layout (not in production)
+   - **Detail page structure**: Each artwork page includes Themes, Analysis, Collector Notes/Provenance, Series Context, Artist Notes, and Keywords sections — all pulled from [staging list.js](staging list.js)
+   - **Path adjustment**: Detail page JavaScript adjusts paths from staging list (which uses `images/full/...`) to subdirectory paths (`../images/full/...`)
 
 3. **Path references critical detail**: 
    - From root (e.g., [index.html](index.html)): Use `images/full/<name>-3.jpg`
@@ -127,6 +130,14 @@ hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
 });
+
+// Close menu when clicking a link
+navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+    });
+});
 ```
 
 **Lightbox implementation** ([index.html](index.html)):
@@ -143,10 +154,12 @@ hamburger.addEventListener('click', () => {
 ```
 
 **Detail page structure** ([image-pages/a-forest.html](image-pages/a-forest.html)):
-- Text block with title, medium, year, descriptions (short/long), conceptual themes, keywords
-- Image displayed: `<img src="../images/full/a-forest-3.jpg">` (using relative path from subdirectory)
-- Back link: `<a href="../index.html">← Back to Gallery</a>`
-- Uses JS to dynamically populate content from inline `nfts` array in `<script>` block (in newer template approach)
+- Loads [staging list.js](staging list.js) via `<script src="../staging list.js">`
+- Uses JavaScript to find artwork: `const currentNFT = nfts.find(nft => nft.title === "a forest");`
+- Dynamically builds HTML via `innerHTML` including title, description, themes, analysis, collector notes, series context, artist notes, and keywords
+- Image wrapper: `<div class="nft-image-wrapper" data-image="${nft.file}" data-dims="${nft.dims}">` (JavaScript builds background-image div with computed aspect ratio)
+- Previous/gallery/next navigation in both navbar and bottom of content
+- Path adjustment: JavaScript converts `images/full/...` to `../images/full/...` for subdirectory context
 
 **Aspect ratio calculation** ([image-pages/a-forest.html](image-pages/a-forest.html#L139-L155)):
 ```javascript
@@ -167,6 +180,33 @@ function initAspectRatioImages() {
                 wrapper.style.aspectRatio = ratio;
             }
         }
+        
+        // Create background div with adjusted path
+        const bg = document.createElement("div");
+        bg.className = "nft-image";
+        const adjustedUrl = imgUrl.startsWith('images/') ? '../' + imgUrl : imgUrl;
+        bg.style.backgroundImage = `url('${adjustedUrl}')`;
+        wrapper.appendChild(bg);
+    });
+}
+
+// Responsive switching between -2 and -3 images
+function updateDetailImage() {
+    const wrappers = document.querySelectorAll('.nft-image-wrapper');
+    const isTabletOrMobile = window.innerWidth <= 1280;
+    
+    wrappers.forEach(wrapper => {
+        const src = wrapper.dataset.image;
+        const filename = src.substring(src.lastIndexOf('/') + 1);
+        const basename = filename.replace(/-[23]\.jpg$/, '');
+        
+        let newSrc = isTabletOrMobile 
+            ? `../images/main/${basename}-2.jpg`
+            : `../images/full/${basename}-3.jpg`;
+        
+        wrapper.dataset.image = newSrc;
+        const bgDiv = wrapper.querySelector('.nft-image');
+        if (bgDiv) bgDiv.style.backgroundImage = `url('${newSrc}')`;
     });
 }
 ```
