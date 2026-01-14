@@ -738,11 +738,13 @@ a:hover {
     .left-column-block {
         grid-column: 1;
         grid-row: 1 / span 2;
+        display: flex;
     }
     
     .nft-image-wrapper {
         grid-column: 1;
         grid-row: 1;
+        display: block;
     }
     
     .image-column {
@@ -786,6 +788,7 @@ a:hover {
         grid-column: 1;
         grid-row: 1;
         order: 1;
+        display: flex;
     }
     
     .text-block {
@@ -803,6 +806,7 @@ a:hover {
         max-width: 100%;
         margin: 0 auto !important;
         border-width: 0.3rem;
+        display: block !important;
     }
     
     .image-column {
@@ -918,5 +922,47 @@ a:hover {
     /* Hide Quick Links footer section on mobile */
     .footer-section:nth-child(2) {
         display: none;
+    }
+}
+
+/* ============================================
+   MOBILE LAYOUT REORDERING (≤600px)
+   ============================================ */
+@media (max-width: 600px) {
+    .nft-row {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+    
+    .text-block h1 {
+        order: 1;
+        text-align: left;
+    }
+    
+    .left-column-block {
+        order: 2;
+    }
+    
+    .text-block > p:first-of-type {
+        order: 3;
+        text-align: left;
+    }
+    
+    .text-block p:has(.price-btn) {
+        order: 4;
+        text-align: left;
+    }
+    
+    .nav-links-bottom {
+        order: 5;
+    }
+    
+    .quote-block {
+        order: 6;
+        text-align: left;
+        border-top: 1px solid var(--rule);
+        padding-top: 1.5rem;
+        margin-top: 1.5rem;
     }
 }
