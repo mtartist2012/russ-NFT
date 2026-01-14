@@ -60,7 +60,8 @@
                              data-dims="${nft.dims}"
                              onclick="openLB('${nft.file}')">
                         </div>
-
+                        
+                        
                     <div class="text-block">
 
 
@@ -89,7 +90,6 @@
                         <ul>
                             ${nft.keywords ? nft.keywords.map(kw => `<li>${kw}</li>`).join('') : '<li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li>'}
                         </ul>
-                        
                     
                         <p>
                             <a href="#" target="_blank" class="price-btn">${nft.price}</a>
@@ -105,12 +105,12 @@
                     </div>
                     
                     <div class="image-column">
-                    <!-- LEFT COLUMN (image on large screens) -->
-                    <div class="image-meta">
-                        <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                        <div class="image-meta">
+                            <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                        </div>
+                        <div class="quote-block">${nft.quote || ''}</div>
                     </div>
-                    <div class="quote-block">${nft.quote || ''}</div>
-                    </div>
+                    
             `;
             root.appendChild(section);
         });
@@ -197,12 +197,12 @@
                     <li><a href="../contact.html">Contact</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
+            <div class="footer-section"> 
                 <h4>Connect</h4>
                 <ul>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Discord</a></li>
+                    <li><a href="https://www.instagram.com/mtartist2012">Instagram</a></li>
+                    <li><a href="https://www.facebook.com/rvlfineart">Facebook</a></li>
+                    <li><a href="https://www.rvlfineart.com/favorites">Purchase Prints</a></li>
                 </ul>
             </div>
         </div>
