@@ -16,9 +16,10 @@ Concise, actionable guidance for AI coding agents working on this repository —
   - Image switching handled by JavaScript on window resize
 - **Automated aspect ratio system**: Detail pages use data attributes (`data-image`, `data-dims`) with JavaScript that auto-builds background-image divs and calculates aspect ratios from dimensions (`6000 x 6000px` → ratio computed programmatically)
 - **Navigation**: 
-  - **Desktop**: Dropdown menu in navbar (`<li class="dropdown">`) lists all artworks
+  - **Navbar links**: Simple navigation with gallery/start, about/contact links
   - **Mobile**: Hamburger menu (`<button class="hamburger">`) toggles `.active` class on `.nav-links`
-  - **Critical**: Dropdown menu must be updated in BOTH [index.html](index.html) AND all pages in `image-pages/` when adding new artwork
+  - **Detail pages**: Previous/gallery/next links in navbar and bottom of content section
+  - **Note**: No dropdown artwork list in current implementation; users navigate via gallery grid or sequential prev/next links
 - **Page templates** (located in `z - working/` folder and `image-pages/` for reference):
   - **Current approach**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven with inline NFT data in `<script>` block
   - [z - working/text-template.html](z - working/text-template.html): Text content template for artwork descriptions with section structure guide
@@ -54,7 +55,7 @@ python -m http.server 8000
 ```
 **Debugging**: Open DevTools, check Console for JS errors and Network tab for 404s (missing images).
 
-**Bulk automation scripts** (PowerShell): Several utility scripts exist in repo root for batch operations:
+**Bulk automation scripts** (PowerShell): Several utility scripts exist in `z - working/` directory for batch operations:
 - `fix-aspect-ratios.ps1`, `fix-pages.ps1`, `fix-remaining-pages.ps1` — automated page updates
 - `add-hamburger.ps1` — add mobile navigation to pages
 - Use with caution; review changes before committing
@@ -72,7 +73,7 @@ python -m http.server 8000
          <div class="thumb-title"><name></div>
      </a>
      ```
-   - **CRITICAL**: Update dropdown menu in BOTH [index.html](index.html) AND all existing pages in `image-pages/` — add link in `<div class="dropdown-menu">` section
+   - **CRITICAL**: Update prev/next navigation links in BOTH navbar and bottom navigation in each new page to maintain sequential flow
    - **Case sensitivity**: Image filenames in `images/full/` and `images/thumbs/` mix uppercase and lowercase (e.g., `All-American-3.jpg`, `a-forest-1.jpg`). Match exact case when referencing images.
 
 2. **Templates usage**:
@@ -125,14 +126,6 @@ const navLinks = document.querySelector('.nav-links');
 hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
-});
-
-// Mobile dropdown toggle
-dropdownToggle.addEventListener('click', (e) => {
-    if (window.innerWidth <= 768) {
-        e.preventDefault();
-        dropdown.classList.toggle('active');
-    }
 });
 ```
 
