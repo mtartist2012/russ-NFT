@@ -311,11 +311,6 @@ a:hover {
    ARTWORK DETAIL PAGES
    ============================================ */
 .nft-row {
-    display: grid;
-    grid-template-columns: 5fr 3fr;
-    grid-template-rows: auto auto;
-    column-gap: 2rem;
-    row-gap: 0;
     margin-top: 4vh;
     margin-bottom: 5vh;
     padding: 2rem;
@@ -328,14 +323,28 @@ a:hover {
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* Desktop: activate 2-column grid */
+@media (min-width: 600px) {
+    .nft-row {
+        display: grid;
+        grid-template-columns: 5fr 3fr;
+        gap: 2rem;
+    }
+}
+
 .nft-row:hover {
     transform: translateY(-0.3125rem);
     box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.16);
 }
 
+.nft-row > h1 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
 .left-column-block {
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -345,9 +354,21 @@ a:hover {
     padding: 2rem 2.5rem 2rem 1.5rem;
     max-width: 100%;
     line-height: 1.8;
-    order: 2;
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 2 / span 2;
+}
+
+.nft-row > hr {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 2rem 0 1rem 0;
+}
+
+.nft-row > .quote-block {
+    grid-column: 1 / -1;
+    grid-row: 4;
 }
 
 .section-title {
@@ -727,35 +748,61 @@ a:hover {
     .nft-row {
         grid-template-columns: 1fr 1fr;
         column-gap: 1.5rem;
-        row-gap: 0;
+        row-gap: 1rem;
     }
     
-    .text-block {
-        grid-column: 2;
-        grid-row: 1 / span 2;
+    .nft-row > h1 {
+        grid-column: 1 / -1;
+        grid-row: 1;
     }
     
     .left-column-block {
         grid-column: 1;
-        grid-row: 1 / span 2;
-        display: flex;
+        grid-row: 2;
+        display: flex !important;
+    }
+    
+    .text-block {
+        grid-column: 2;
+        grid-row: 2 / span 2;
     }
     
     .nft-image-wrapper {
-        grid-column: 1;
-        grid-row: 1;
-        display: block;
+        display: block !important;
+    }
+    
+    .nft-row > hr {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+    
+    .nft-row > .quote-block {
+        grid-column: 1 / -1;
+        grid-row: 4;
     }
     
     .image-column {
         grid-column: 1;
-        grid-row: 2;
+        grid-row: 3;
         align-self: start;
         margin-top: 0;
     }
     
     .container {
         max-width: 95%;
+    }
+}
+
+/* ============================================
+   TABLET RESPONSIVE (up to 1024px)
+   ============================================ */
+@media (max-width: 1024px) {
+    .left-column-block {
+        display: flex !important;
+    }
+    
+    .nft-image-wrapper {
+        display: block !important;
     }
 }
 
@@ -777,36 +824,46 @@ a:hover {
     }
     
     .nft-row {
-        grid-template-columns: 1fr;
-        column-gap: 0;
-        row-gap: 0;
+        display: flex;
+        flex-direction: column;
         margin-bottom: 6vh;
         padding: 1rem;
     }
     
-    .left-column-block {
-        grid-column: 1;
-        grid-row: 1;
+    .nft-row > h1 {
         order: 1;
-        display: flex;
     }
     
-    .text-block {
-        grid-column: 1;
-        grid-row: 2;
-        padding: 1rem;
+    .left-column-block {
         order: 2;
+        display: flex !important;
     }
     
     .nft-image-wrapper {
-        grid-column: 1;
-        grid-row: 1;
-        order: 1;
+        display: block !important;
         width: calc(100% - 2rem) !important;
         max-width: 100%;
         margin: 0 auto !important;
         border-width: 0.3rem;
-        display: block !important;
+    }
+    
+    .text-block {
+        order: 3;
+        padding: 1rem;
+    }
+    .text-block {
+        order: 3;
+        padding: 1rem;
+    }
+    
+    .nft-row > hr {
+        order: 4;
+    }
+    
+    .quote-block {
+        order: 5;
+        margin: 1rem auto;
+        width: 90%;
     }
     
     .image-column {
@@ -815,14 +872,6 @@ a:hover {
     
     .image-meta {
         display: none;
-    }
-    
-    .quote-block {
-        grid-column: 1;
-        grid-row: 3;
-        order: 3;
-        margin: 1rem auto;
-        width: 90%;
     }
     
     /* Show only essential content on mobile */
@@ -935,31 +984,33 @@ a:hover {
         text-align: left;
     }
     
-    .text-block h1 {
+    .nft-row > h1 {
         order: 1;
         text-align: left;
     }
     
     .left-column-block {
         order: 2;
+        display: flex !important;
     }
     
-    .text-block > p:first-of-type {
+    .nft-image-wrapper {
+        display: block !important;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .text-block {
         order: 3;
         text-align: left;
     }
     
-    .text-block p:has(.price-btn) {
+    .nft-row > hr {
         order: 4;
-        text-align: left;
-    }
-    
-    .nav-links-bottom {
-        order: 5;
     }
     
     .quote-block {
-        order: 6;
+        order: 5;
         text-align: left;
         border-top: 1px solid var(--rule);
         padding-top: 1.5rem;

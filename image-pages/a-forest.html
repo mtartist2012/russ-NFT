@@ -61,7 +61,7 @@
             const section = document.createElement('section');
             section.className = 'nft-row';
             section.innerHTML = `
-                    <div class="left-column-block">
+                    <div class="left-col">
                         <div class="nft-image-wrapper" 
                              data-image="${nft.file}" 
                              data-dims="${nft.dims}"
@@ -74,8 +74,8 @@
                         
                         <div class="quote-block">${nft.quote || ''}</div>
                     </div>
-                        
-                    <div class="text-block">
+                    
+                    <div class="right-col">
                         <h1>${nft.title}</h1>
                         
                         <p>${nft.desc}</p>
@@ -111,6 +111,8 @@
                             <span class="nav-separator">|</span>
                             <a href="blue-redux.html">Next</a>
                         </div>
+                        
+                        <hr class="nft-rule">
                     </div>
                     
             `;
