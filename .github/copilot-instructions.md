@@ -194,7 +194,7 @@ function initAspectRatioImages() {
 ## Platform notes
 - Repo stored in **OneDrive on Windows** — watch for spaces in paths, file locking
 - Use absolute paths from workspace root when referencing files programmatically
-- **About/Contact pages**: Use `page-background-01.jpg` instead of default `page-background-02.jpg`; logo links to [index.html](index.html)
+- **About/Contact pages**: Use `page-background.jpg` instead of default `page-background-02.jpg`; logo links to [index.html](index.html)
 
 ## When to ask owner
 - Before adding build tools, package managers, or frameworks
