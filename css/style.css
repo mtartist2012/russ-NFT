@@ -404,8 +404,10 @@ a:hover {
     
     .quote-block {
         grid-area: quote;
-        width: 80%;
+        width: 80% !important;
         align-self: start;
+        margin: 1rem auto 0 auto !important;
+        max-width: none;
     }
     
     /* FIX #2: Right column (3fr) - Text content */
