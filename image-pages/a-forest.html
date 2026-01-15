@@ -169,7 +169,7 @@
             wrappers.forEach(wrapper => {
                 const src = wrapper.dataset.image;
                 const filename = src.substring(src.lastIndexOf('/') + 1);
-                const basename = filename.replace(/-[23]\.jpg$/, '');
+                const basename = filename.replace(/-[123]\.jpg$/, '');
                 
                 let newSrc = isTabletOrMobile 
                     ? `../images/main/${basename}-2.jpg`
