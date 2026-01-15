@@ -321,15 +321,7 @@ a:hover {
     border-radius: 0.5rem;
     box-shadow: 0 0.625rem 1.25rem rgba(0,0,0,0.12);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* Desktop: activate 2-column grid */
-@media (min-width: 600px) {
-    .nft-row {
-        display: grid;
-        grid-template-columns: 5fr 3fr;
-        gap: 2rem;
-    }
+    /* Mobile-first: single column, no grid */
 }
 
 .nft-row:hover {
@@ -337,38 +329,54 @@ a:hover {
     box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.16);
 }
 
-.nft-row > h1 {
-    grid-column: 1 / -1;
-    grid-row: 1;
+/* left-col and right-col: single column on mobile */
+.left-col,
+.right-col {
+    /* No grid positioning on mobile */
 }
 
-.left-column-block {
-    grid-column: 1;
-    grid-row: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.text-block {
-    padding: 2rem 2.5rem 2rem 1.5rem;
-    max-width: 100%;
-    line-height: 1.8;
-    grid-column: 2;
-    grid-row: 2 / span 2;
-}
-
-.nft-row > hr {
-    grid-column: 1 / -1;
-    grid-row: 3;
+.nft-rule {
     border: none;
     border-top: 1px solid var(--rule);
     margin: 2rem 0 1rem 0;
 }
 
-.nft-row > .quote-block {
-    grid-column: 1 / -1;
-    grid-row: 4;
+/* Desktop: activate 5fr/3fr grid at 900px */
+@media (min-width: 900px) {
+    .nft-row {
+        display: grid;
+        grid-template-columns: 5fr 3fr;
+        gap: 2rem;
+    }
+    
+    /* left-col spans both rows in column 1 */
+    .left-col {
+        grid-column: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Move h1 to left column visually */
+    .right-col h1 {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    /* nft-image-wrapper stays in left column */
+    .left-col .nft-image-wrapper {
+        grid-column: 1;
+        grid-row: 2;
+    }
+    
+    /* Move quote-block to right column visually */
+    .left-col .quote-block {
+        grid-column: 2;
+    }
+    
+    /* right-col content in column 2 */
+    .right-col {
+        grid-column: 2;
+    }
 }
 
 .section-title {
@@ -419,7 +427,6 @@ a:hover {
     grid-column: 1;
     border: 0.625rem solid #1d0101;
     margin: 2rem;
-    margin-top: 5rem;
     margin-bottom: 0;
     line-height: 0;
     align-self: start;
@@ -745,49 +752,6 @@ a:hover {
         padding: 1.5rem;
     }
     
-    .nft-row {
-        grid-template-columns: 1fr 1fr;
-        column-gap: 1.5rem;
-        row-gap: 1rem;
-    }
-    
-    .nft-row > h1 {
-        grid-column: 1 / -1;
-        grid-row: 1;
-    }
-    
-    .left-column-block {
-        grid-column: 1;
-        grid-row: 2;
-        display: flex !important;
-    }
-    
-    .text-block {
-        grid-column: 2;
-        grid-row: 2 / span 2;
-    }
-    
-    .nft-image-wrapper {
-        display: block !important;
-    }
-    
-    .nft-row > hr {
-        grid-column: 1 / -1;
-        grid-row: 3;
-    }
-    
-    .nft-row > .quote-block {
-        grid-column: 1 / -1;
-        grid-row: 4;
-    }
-    
-    .image-column {
-        grid-column: 1;
-        grid-row: 3;
-        align-self: start;
-        margin-top: 0;
-    }
-    
     .container {
         max-width: 95%;
     }
@@ -797,13 +761,7 @@ a:hover {
    TABLET RESPONSIVE (up to 1024px)
    ============================================ */
 @media (max-width: 1024px) {
-    .left-column-block {
-        display: flex !important;
-    }
-    
-    .nft-image-wrapper {
-        display: block !important;
-    }
+    /* Tablet-specific overrides if needed */
 }
 
 /* ============================================
@@ -824,46 +782,15 @@ a:hover {
     }
     
     .nft-row {
-        display: flex;
-        flex-direction: column;
         margin-bottom: 6vh;
         padding: 1rem;
     }
     
-    .nft-row > h1 {
-        order: 1;
-    }
-    
-    .left-column-block {
-        order: 2;
-        display: flex !important;
-    }
-    
     .nft-image-wrapper {
-        display: block !important;
         width: calc(100% - 2rem) !important;
         max-width: 100%;
         margin: 0 auto !important;
         border-width: 0.3rem;
-    }
-    
-    .text-block {
-        order: 3;
-        padding: 1rem;
-    }
-    .text-block {
-        order: 3;
-        padding: 1rem;
-    }
-    
-    .nft-row > hr {
-        order: 4;
-    }
-    
-    .quote-block {
-        order: 5;
-        margin: 1rem auto;
-        width: 90%;
     }
     
     .image-column {
@@ -872,27 +799,6 @@ a:hover {
     
     .image-meta {
         display: none;
-    }
-    
-    /* Show only essential content on mobile */
-    .text-block h1,
-    .text-block > p:first-of-type,
-    .text-block .price-btn {
-        display: block;
-    }
-    
-    .text-block h3,
-    .text-block ul,
-    .text-block > p:not(:first-of-type):not(:has(.price-btn)) {
-        display: none;
-    }
-    
-    .text-block p:has(.price-btn) {
-        display: block;
-    }
-    
-    .nav-links-bottom {
-        display: flex;
     }
     
     .nft-image-wrap {
@@ -907,11 +813,6 @@ a:hover {
         height: auto;
         margin-right: 0;
         border-width: 0.5rem;
-    }
-    
-    .nft-row:nth-child(even) .narrative-text {
-        order: 0;
-        grid-column: auto;
     }
     
     .navbar .logo {
@@ -1016,4 +917,12 @@ a:hover {
         padding-top: 1.5rem;
         margin-top: 1.5rem;
     }
-}
+}(≤600px)
+   ============================================ */
+@media (max-width: 600px) {
+    .nft-image-wrapper {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .quote-block {

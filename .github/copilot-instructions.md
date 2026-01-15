@@ -3,9 +3,10 @@ Concise, actionable guidance for AI coding agents working on this repository —
 
 ## Big picture
 - **Type**: Static multi-page website showcasing digital NFT artwork
-- **Key files**: [index.html](index.html) (gallery hub), [css/style.css](css/style.css)
+- **Key files**: [index.html](index.html) (gallery hub), [css/style.css](css/style.css), [staging list.js](staging list.js) (metadata source)
 - **Structure**: Gallery hub → individual artwork pages in `image-pages/` directory
 - **Assets**: High-res artwork in `images/full/`, thumbnails in `images/thumbs/`, hero/banner images in `images/main/`
+- **Banner images**: Different banners for page types — `banner-index.jpg` (gallery), `banner-pages.jpg` (artwork details), `banner-about.jpg`, `banner-contact.jpg`
 
 ## Architecture & data flow
 - **Multi-page pattern**: [index.html](index.html) shows thumbnail grid linking to dedicated pages (e.g., [image-pages/a-forest.html](image-pages/a-forest.html))
@@ -26,7 +27,10 @@ Concise, actionable guidance for AI coding agents working on this repository —
   - [z - working/text-template.html](z - working/text-template.html): Text content template for artwork descriptions with section structure guide
   - [z - working/one-image.css](z - working/one-image.css): Alternative CSS layout (not currently in production)
   - [z - working/new-hub.html](z - working/new-hub.html): Alternative gallery hub layout
-  - [staging list.js](staging list.js) (root level): **Source of truth** for all NFT metadata (title, desc, date, dims, aspectRatio, themes, analysis, collector, series, artistNotes, keywords)
+  - [staging list.js](staging list.js) (root level): **Source of truth** for all NFT metadata
+    - **Required fields per artwork**: `title`, `desc`, `date`, `dims`, `aspectRatio`, `file` (path), `price`
+    - **Optional fields**: `quote`, `themes`, `analysis`, `collector`, `series`, `artistNotes`, `keywords` (array)
+    - **Important**: When adding new artwork, create entry in staging list AND create HTML page in `image-pages/`
 - **Lightbox**: Inline JS (`openLB()` function) handles click-to-zoom; DOM: `<div class="lightbox" id="lightbox" onclick="this.style.display='none'">` — click anywhere to close
 
 ## Critical file structures
@@ -59,19 +63,36 @@ python -m http.server 8000
 **Bulk automation scripts** (PowerShell): Several utility scripts exist in `z - working/` directory for batch operations:
 - `fix-aspect-ratios.ps1`, `fix-pages.ps1`, `fix-remaining-pages.ps1` — automated page updates
 - `add-hamburger.ps1` — add mobile navigation to pages
-- Use with caution; review changes before committing
-
-## Project-specific conventions
-1. **Adding new artwork**: 
-   - Place thumbnail in `images/thumbs/<name>-1.jpg` 
-   - Place medium-res in `images/main/<name>-2.jpg`
-   - Place full image in `images/full/<name>-3.jpg`
-   - Create detail page in `image-pages/<name>.html` using existing pages like [image-pages/a-forest.html](image-pages/a-forest.html) as template
-   - Add gallery entry to [index.html](index.html) gallery section:
+- Use with caution; revie (complete workflow): 
+   - **Step 1**: Place thumbnail in `images/thumbs/<name>-1.jpg`, medium-res in `images/main/<name>-2.jpg`, full image in `images/full/<name>-3.jpg`
+   - **Step 2**: Add metadata entry to [staging list.js](staging list.js) `nfts` array:
+     ```javascript
+     { 
+         title: "artwork name",
+         desc: "Visual description...", 
+         date: "Dec 2025", 
+         dims: "6000 x 6000px",
+         aspectRatio: "1/1",
+         file: "images/full/<name>-3.jpg",
+         price: "NFT listing",
+         quote: "Optional quote...",
+         themes: "Thematic analysis...",
+         analysis: "Visual analysis...",
+         collector: "Provenance info...",
+         series: "Series context...",
+         artistNotes: "Artist commentary...",
+         keywords: ["tag1", "tag2"]
+     }
+     ```
+   - **Step 3**: Create detail page in `image-pages/<name>.html` using existing pages like [image-pages/a-forest.html](image-pages/a-forest.html) as template — update `const currentNFT = nfts.find(nft => nft.title === "artwork name");` with exact title match
+   - **Step 4**: Add gallery entry to [index.html](index.html) gallery section:
      ```html
      <a class="thumb" href="image-pages/<name>.html">
          <img src="images/thumbs/<name>-1.jpg" alt="...">
          <div class="thumb-title"><name></div>
+     </a>
+     ```
+   - **Step 5 (CRITICAL)**: Update prev/next navigation links in BOTH navbar and bottom navigation in the new page AND adjacent pages
      </a>
      ```
    - **CRITICAL**: Update prev/next navigation links in BOTH navbar and bottom navigation in each new page to maintain sequential flow
@@ -217,7 +238,10 @@ function updateDetailImage() {
     --bg: rgb(235, 208, 144);
     --bk: rgb(255, 253, 251);
     --accent: rgb(255, 0, 85);
-    --text: rgb(29, 25, 26);
+    --text: rgb(29, 25, 26)
+  - Use `page-background.jpg` instead of default `page-background-02.jpg`
+  - Apply blur effect via `::before` pseudo-element with `filter: blur(8px)` on background
+  - Logo links to [index.html](index.html) (not just plain text
     --rule: rgb(141, 122, 97);
     --frame: rgb(25, 18, 10);
     --button: rgba(125, 88, 50, 0.5);
