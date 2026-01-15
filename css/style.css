@@ -456,9 +456,6 @@ a:hover {
     width: 90%;
     overflow: hidden;
     cursor: zoom-in;
-    order: 0;
-    grid-row: 1;
-    grid-column: 1;
     border: 0.625rem solid #1d0101;
     margin: 2rem;
     margin-bottom: 0;

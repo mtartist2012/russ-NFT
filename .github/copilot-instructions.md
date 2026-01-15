@@ -3,10 +3,10 @@ Concise, actionable guidance for AI coding agents working on this repository —
 
 ## Big picture
 - **Type**: Static multi-page website showcasing digital NFT artwork
-- **Key files**: [index.html](index.html) (gallery hub), [css/style.css](css/style.css), [staging list.js](staging list.js) (metadata source)
+- **Key files**: [index.html](index.html) (gallery hub), [css/style.css](css/style.css), [staging list.js](staging list.js) (metadata source of truth)
 - **Structure**: Gallery hub → individual artwork pages in `image-pages/` directory
-- **Assets**: High-res artwork in `images/full/`, thumbnails in `images/thumbs/`, hero/banner images in `images/main/`
-- **Banner images**: Different banners for page types — `banner-index.jpg` (gallery), `banner-pages.jpg` (artwork details), `banner-about.jpg`, `banner-contact.jpg`
+- **Assets**: High-res artwork in `images/full/`, medium-res in `images/main/`, thumbnails in `images/thumbs/`
+- **Banner images**: Different banners for page types in `images/` — `banner-index.jpg` (gallery), `banner-pages.jpg` (artwork details), `banner-about.jpg`, `banner-contact.jpg`
 
 ## Architecture & data flow
 - **Multi-page pattern**: [index.html](index.html) shows thumbnail grid linking to dedicated pages (e.g., [image-pages/a-forest.html](image-pages/a-forest.html))
@@ -63,7 +63,9 @@ python -m http.server 8000
 **Bulk automation scripts** (PowerShell): Several utility scripts exist in `z - working/` directory for batch operations:
 - `fix-aspect-ratios.ps1`, `fix-pages.ps1`, `fix-remaining-pages.ps1` — automated page updates
 - `add-hamburger.ps1` — add mobile navigation to pages
-- Use with caution; revie (complete workflow): 
+- Use with caution; review before running on multiple files
+
+**Adding new artwork** (complete workflow): 
    - **Step 1**: Place thumbnail in `images/thumbs/<name>-1.jpg`, medium-res in `images/main/<name>-2.jpg`, full image in `images/full/<name>-3.jpg`
    - **Step 2**: Add metadata entry to [staging list.js](staging list.js) `nfts` array:
      ```javascript
@@ -92,10 +94,7 @@ python -m http.server 8000
          <div class="thumb-title"><name></div>
      </a>
      ```
-   - **Step 5 (CRITICAL)**: Update prev/next navigation links in BOTH navbar and bottom navigation in the new page AND adjacent pages
-     </a>
-     ```
-   - **CRITICAL**: Update prev/next navigation links in BOTH navbar and bottom navigation in each new page to maintain sequential flow
+   - **Step 5 (CRITICAL)**: Update prev/next navigation links in BOTH navbar and bottom navigation in the new page AND adjacent pages to maintain sequential flow
    - **Case sensitivity**: Image filenames in `images/full/` and `images/thumbs/` mix uppercase and lowercase (e.g., `All-American-3.jpg`, `a-forest-1.jpg`). Match exact case when referencing images.
 
 2. **Templates usage**:
@@ -238,10 +237,7 @@ function updateDetailImage() {
     --bg: rgb(235, 208, 144);
     --bk: rgb(255, 253, 251);
     --accent: rgb(255, 0, 85);
-    --text: rgb(29, 25, 26)
-  - Use `page-background.jpg` instead of default `page-background-02.jpg`
-  - Apply blur effect via `::before` pseudo-element with `filter: blur(8px)` on background
-  - Logo links to [index.html](index.html) (not just plain text
+    --text: rgb(29, 25, 26);
     --rule: rgb(141, 122, 97);
     --frame: rgb(25, 18, 10);
     --button: rgba(125, 88, 50, 0.5);
@@ -258,7 +254,7 @@ function updateDetailImage() {
 ## Platform notes
 - Repo stored in **OneDrive on Windows** — watch for spaces in paths, file locking
 - Use absolute paths from workspace root when referencing files programmatically
-- **About/Contact pages**: Use `page-background.jpg` instead of default `page-background-02.jpg`; logo links to [index.html](index.html)
+- **About/Contact pages**: Use `page-background.jpg` instead of default `page-background-02.jpg`; apply blur effect via `::before` pseudo-element with `filter: blur(8px)`; logo links to [index.html](index.html)
 
 ## When to ask owner
 - Before adding build tools, package managers, or frameworks
