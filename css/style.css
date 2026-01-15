@@ -380,13 +380,35 @@ a:hover {
         grid-template-columns: 5fr 3fr;
         gap: 2rem;
         grid-template-areas:
-            "title title"
-            "desc image"
-            "content image"
-            "content meta";
+            "image title"
+            "image desc"
+            "image content"
+            "meta content"
+            "quote content";
     }
     
-    /* FIX #2: Left column (5fr) - Text content */
+    /* FIX #2: Left column (5fr) - Artwork image */
+    .nft-image-wrapper {
+        grid-area: image;
+        width: 100%;
+        margin: 0;
+        margin-top: 0;
+    }
+    
+    .image-meta {
+        grid-area: meta;
+        text-align: center;
+        margin-top: 0.5rem;
+        align-self: start;
+    }
+    
+    .quote-block {
+        grid-area: quote;
+        width: 80%;
+        align-self: start;
+    }
+    
+    /* FIX #2: Right column (3fr) - Text content */
     .nft-title {
         grid-area: title;
     }
@@ -397,19 +419,7 @@ a:hover {
     
     .nft-content {
         grid-area: content;
-        padding: 0 2rem 0 0;
-    }
-    
-    /* FIX #2: Right column (3fr) - Artwork image */
-    .nft-image-wrapper {
-        grid-area: image;
-        width: 100%;
-        margin: 0;
-    }
-    
-    .image-meta {
-        grid-area: meta;
-        text-align: center;
+        padding: 0;
     }
 }
 
