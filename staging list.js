@@ -7,7 +7,7 @@ const nfts = [
         aspectRatio: "1/1",
         file: "images/full/a-forest-3.jpg",
         price: "NFT listing",
-        quote: "Placeholder quote text for this artwork will be replaced with actual content from uploaded file later.",
+        quote: "Digital art is a medium that asks the same old question every true artwork must answer: does it tremble with truth, or merely glitter with novelty?",
         themes: "This piece explores the dynamic tension between action and inaction, capturing the visceral response to perceived threats through abstract forms and vibrant colors.",
         analysis: "Under the surface the canvas is alive with color interactions that suggest movement and emotional intensity. The juxtaposition of sharp angles and fluid shapes creates a sense of conflict and resolution, mirroring the human experience of confronting fears and desires.",
         collector: "First edition NFT; RVL signature; part of the 2025 series.",

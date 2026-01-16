@@ -267,11 +267,22 @@ a:hover {
     padding: 3rem;
     max-width: 1800px;
     margin: 3rem auto;
+    position: relative;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.625rem 0.625rem rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+/* Blurred background for gallery */
+.gallery::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background-image: url(../images/section-background.jpg);
     background-size: cover;
     background-position: center;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.625rem 0.625rem rgba(0,0,0,0.2);
+    filter: blur(8px);
+    z-index: -1;
 }
 
 .thumb {
@@ -280,18 +291,18 @@ a:hover {
     padding: 1.5rem;
     cursor: pointer;
     overflow: visible;
-
+    /* FIX #3: Remove line-height to eliminate white space under images */
+    line-height: 0;
     text-decoration: none;
 }
 
 .thumb img {
     width: 100%;
     height: auto;
-    display: inside;
+    /* FIX #3: Set display:block to remove baseline spacing under images */
+    display: block;
     border: 0.0625rem solid var(--rule);
-    
     box-shadow: 0 0.625rem 0.625rem rgba(0,0,0,0.2);
-    vertical-align: bottom;
     transition: transform 0.3s ease;
 }
 
@@ -305,26 +316,37 @@ a:hover {
     margin-top: 0.5rem;
     text-align: center;
     color: var(--text);
+    /* Reset line-height for text after line-height:0 on parent */
+    line-height: 1.6;
 }
 
 /* ============================================
    ARTWORK DETAIL PAGES
    ============================================ */
 .nft-row {
-    display: grid;
-    grid-template-columns: 5fr 3fr;
-    grid-template-rows: auto auto;
-    column-gap: 2rem;
-    row-gap: 0;
     margin-top: 4vh;
     margin-bottom: 5vh;
     padding: 2rem;
+    padding-top: 4rem;
     align-items: start;
-    background-image: url(../images/section-background.jpg);
-    background-size: cover;
+    position: relative;
     border-radius: 0.5rem;
     box-shadow: 0 0.625rem 1.25rem rgba(0,0,0,0.12);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    overflow: hidden;
+    /* FIX #1: Mobile-first - single column, no grid by default */
+}
+
+/* Blurred background for detail pages */
+.nft-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url(../images/section-background.jpg);
+    background-size: cover;
+    filter: blur(8px);
+    z-index: -1;
+    border-radius: 0.5rem;
 }
 
 .nft-row:hover {
@@ -332,13 +354,75 @@ a:hover {
     box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.16);
 }
 
-.text-block {
-    padding: 2rem 2.5rem 2rem 1.5rem;
-    max-width: 100%;
-    line-height: 1.8;
-    order: 2;
-    grid-column: 2;
-    grid-row: 1 / span 2;
+/* Mobile: Natural flow matches DOM order */
+.nft-title {
+    /* Title styling */
+}
+
+.nft-description {
+    margin-bottom: 2rem;
+}
+
+.nft-content {
+    padding: 1rem 0;
+}
+
+.nft-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 2rem 0 1rem 0;
+}
+
+/* FIX #2: Desktop 5/3 Grid - Clean, predictable layout at 900px+ */
+@media (min-width: 900px) {
+    .nft-row {
+        display: grid;
+        grid-template-columns: 5fr 3fr;
+        gap: 2rem;
+        grid-template-areas:
+            "image title"
+            "image desc"
+            "image content"
+            "meta content"
+            "quote content";
+    }
+    
+    /* FIX #2: Left column (5fr) - Artwork image */
+    .nft-image-wrapper {
+        grid-area: image;
+        width: 100%;
+        margin: 0;
+        margin-top: 0;
+    }
+    
+    .image-meta {
+        grid-area: meta;
+        text-align: center;
+        margin-top: 0.5rem;
+        align-self: start;
+    }
+    
+    .quote-block {
+        grid-area: quote;
+        width: 80% !important;
+        align-self: start;
+        margin: 1rem auto 0 auto !important;
+        max-width: none;
+    }
+    
+    /* FIX #2: Right column (3fr) - Text content */
+    .nft-title {
+        grid-area: title;
+    }
+    
+    .nft-description {
+        grid-area: desc;
+    }
+    
+    .nft-content {
+        grid-area: content;
+        padding: 0;
+    }
 }
 
 .section-title {
@@ -384,13 +468,12 @@ a:hover {
     width: 90%;
     overflow: hidden;
     cursor: zoom-in;
-    order: 0;
-    grid-row: 1;
-    grid-column: 1;
     border: 0.625rem solid #1d0101;
     margin: 2rem;
     margin-bottom: 0;
+    /* FIX #3: Ensure no white line under background images */
     line-height: 0;
+    display: block;
     align-self: start;
 }
 
@@ -422,7 +505,8 @@ a:hover {
     margin-left: 2rem;
     margin-right: 2rem;
     margin-top: 0;
-    align-self: start
+    align-self: start;
+}
 
 .pixel-overlay {
     position: absolute;
@@ -713,32 +797,16 @@ a:hover {
         padding: 1.5rem;
     }
     
-    .nft-row {
-        grid-template-columns: 1fr 1fr;
-        column-gap: 1.5rem;
-        row-gap: 0;
-    }
-    
-    .text-block {
-        grid-column: 2;
-        grid-row: 1 / span 2;
-    }
-    
-    .nft-image-wrapper {
-        grid-column: 1;
-        grid-row: 1;
-    }
-    
-    .image-column {
-        grid-column: 1;
-        grid-row: 2;
-        align-self: start;
-        margin-top: 0;
-    }
-    
     .container {
         max-width: 95%;
     }
+}
+
+/* ============================================
+   TABLET RESPONSIVE (up to 1024px)
+   ============================================ */
+@media (max-width: 1024px) {
+    /* Tablet-specific overrides if needed */
 }
 
 /* ============================================
@@ -759,24 +827,11 @@ a:hover {
     }
     
     .nft-row {
-        grid-template-columns: 1fr;
-        column-gap: 0;
-        row-gap: 0;
         margin-bottom: 6vh;
         padding: 1rem;
     }
     
-    .text-block {
-        grid-column: 1;
-        grid-row: 2;
-        padding: 1rem;
-        order: 2;
-    }
-    
     .nft-image-wrapper {
-        grid-column: 1;
-        grid-row: 1;
-        order: 1;
         width: calc(100% - 2rem) !important;
         max-width: 100%;
         margin: 0 auto !important;
@@ -787,25 +842,8 @@ a:hover {
         display: none;
     }
     
-    /* Show only essential content on mobile */
-    .text-block h1,
-    .text-block > p:first-of-type,
-    .text-block .price-btn {
-        display: block;
-    }
-    
-    .text-block h3,
-    .text-block ul,
-    .text-block > p:not(:first-of-type):not(:has(.price-btn)) {
+    .image-meta {
         display: none;
-    }
-    
-    .text-block p:has(.price-btn) {
-        display: block;
-    }
-    
-    .nav-links-bottom {
-        display: flex;
     }
     
     .nft-image-wrap {
@@ -820,11 +858,6 @@ a:hover {
         height: auto;
         margin-right: 0;
         border-width: 0.5rem;
-    }
-    
-    .nft-row:nth-child(even) .narrative-text {
-        order: 0;
-        grid-column: auto;
     }
     
     .navbar .logo {
@@ -886,3 +919,40 @@ a:hover {
         display: none;
     }
 }
+
+/* ============================================
+   MOBILE LAYOUT (≤600px)
+   ============================================ */
+@media (max-width: 600px) {
+    /* FIX #1: DOM order is already correct, no flexbox reordering needed */
+    .nft-image-wrapper {
+        width: 100%;
+        margin: 2rem auto;
+    }
+    
+    /* Align text with left edge of image on mobile */
+    .nft-title,
+    .nft-description,
+    .nft-content,
+    .image-meta,
+    .quote-block {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+    
+    .quote-block {
+        width: auto;
+        text-align: left;
+        padding: 1rem 0;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+}(≤600px)
+   ============================================ */
+@media (max-width: 600px) {
+    .nft-image-wrapper {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .quote-block {
