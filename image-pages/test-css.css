@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #fff;
+  color: #111;
+}
+
+.artwork-layout {
+  display: block;
+  padding: 1.5rem 1rem 2rem;
+}
+
+/* Image full-width on mobile */
+.artwork-image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 1px rule */
+.rule-1px {
+  border: 0;
+  border-top: 1px solid #111;
+  margin: 1.5rem 0;
+}
+
+/* Desktop 5/3 layout */
+@media (min-width: 900px) {
+  .artwork-layout {
+    display: grid;
+    grid-template-columns: 5fr 3fr;
+    column-gap: 2rem;
+    row-gap: 1rem;
+    align-items: start;
+  }
+
+  /* Left column: image, dims/date, rule, quote */
+  .artwork-image-wrapper {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .dims-date {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .quote-block {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .rule-bottom-main {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  /* Right column: all text content */
+  .artwork-title,
+  .short-desc,
+  .long-desc-block,
+  .themes-block,
+  .analysis-block,
+  .collector-block,
+  .series-block,
+  .artist-notes-block,
+  .keywords-block,
+  .status-block,
+  .nft-block,
+  .nav-bottom {
+    grid-column: 2;
+  }
+
+  .artwork-title {
+    grid-row: 1;
+  }
+
+  .short-desc {
+    grid-row: 2;
+  }
+
+  .long-desc-block {
+    grid-row: 3;
+  }
+
+  .themes-block {
+    grid-row: 4;
+  }
+
+  .analysis-block {
+    grid-row: 5;
+  }
+
+  .collector-block {
+    grid-row: 6;
+  }
+
+  .series-block {
+    grid-row: 7;
+  }
+
+  .artist-notes-block {
+    grid-row: 8;
+  }
+
+  .keywords-block {
+    grid-row: 9;
+  }
+
+  .status-block {
+    grid-row: 10;
+  }
+
+  .nft-block {
+    grid-row: 11;
+  }
+
+  .nav-bottom {
+    grid-row: 12;
+  }
+}
