@@ -206,11 +206,16 @@ function initAspectRatioImages() {
         bg.className = "nft-image";
         const adjustedUrl = imgUrl.startsWith('images/') ? '../' + imgUrl : imgUrl;
         bg.style.backgroundImage = `url('${adjustedUrl}')`;
-        wrapper.appendChild(bg);
-    });
-}
-
-// Responsive switching between -2 and -3 images
+                
+                // Add pixel overlay for image protection
+                const overlay = document.createElement("img");
+                overlay.className = "pixel-overlay";
+                overlay.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+                overlay.alt = "";
+                overlay.draggable = false;
+                
+                wrapper.appendChild(bg);
+                wrapper.appendChild(overlay);
 function updateDetailImage() {
     const wrappers = document.querySelectorAll('.nft-image-wrapper');
     const isTabletOrMobile = window.innerWidth <= 1280;
@@ -218,13 +223,14 @@ function updateDetailImage() {
     wrappers.forEach(wrapper => {
         const src = wrapper.dataset.image;
         const filename = src.substring(src.lastIndexOf('/') + 1);
-        const basename = filename.replace(/-[23]\.jpg$/, '');
+        const basename = filename.replace(/-[123]\.jpg$/, '');
         
         let newSrc = isTabletOrMobile 
             ? `../images/main/${basename}-2.jpg`
             : `../images/full/${basename}-3.jpg`;
         
         wrapper.dataset.image = newSrc;
+        wrapper.setAttribute('onclick', `openLB('${newSrc}')`);
         const bgDiv = wrapper.querySelector('.nft-image');
         if (bgDiv) bgDiv.style.backgroundImage = `url('${newSrc}')`;
     });
