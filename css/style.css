@@ -372,6 +372,9 @@ a:hover {
     border-top: 1px solid var(--rule);
     margin: 2rem 0 1rem 0;
 }
+.index-description {
+    color: var(--bg);
+}
 
 /* FIX #2: Desktop 5/3 Grid - Clean, predictable layout at 900px+ */
 @media (min-width: 900px) {
