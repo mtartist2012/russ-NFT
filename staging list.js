@@ -2,6 +2,7 @@ const nfts = [
     { 
         title: "a forest",
         desc: "Warm textural layers evoking solar energy and molten light.", 
+        longDesc: "Full long-form description for 'a forest' goes here.",
         date: "Dec 2025", 
         dims: "6000 x 6000px",
         aspectRatio: "1/1",

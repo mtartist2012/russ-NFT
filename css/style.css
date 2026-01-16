@@ -328,13 +328,11 @@ a:hover {
     margin-bottom: 5vh;
     padding: 2rem;
     padding-top: 4rem;
-    align-items: start;
     position: relative;
     border-radius: 0.5rem;
     box-shadow: 0 0.625rem 1.25rem rgba(0,0,0,0.12);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     overflow: hidden;
-    /* FIX #1: Mobile-first - single column, no grid by default */
 }
 
 /* Blurred background for detail pages */
@@ -354,77 +352,117 @@ a:hover {
     box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,0.16);
 }
 
-/* Mobile: Natural flow matches DOM order */
 .nft-title {
-    /* Title styling */
+    font-family: "Homemade Apple", cursive;
+    font-weight: 400;
+    margin-bottom: 1rem;
 }
 
-.nft-description {
+.nft-short-desc {
     margin-bottom: 2rem;
 }
 
-.nft-content {
-    padding: 1rem 0;
+.nft-short-desc p {
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.nft-long-desc h3 {
+    font-family: 'Oswald', sans-serif;
+    margin: 2rem 0 0.75rem 0;
+    font-size: 1.2rem;
+}
+
+.nft-long-desc p {
+    font-family: 'Red Hat Text', sans-serif;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.keywords-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.keywords-list li {
+    font-family: 'Red Hat Text', sans-serif;
+    background: rgba(125, 88, 50, 0.3);
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+}
+
+.status-module {
+    margin: 2rem 0;
 }
 
 .nft-rule {
     border: none;
     border-top: 1px solid var(--rule);
-    margin: 2rem 0 1rem 0;
+    margin: 2rem 0;
 }
+
 .index-description {
     color: var(--bg);
 }
 
-/* FIX #2: Desktop 5/3 Grid - Clean, predictable layout at 900px+ */
+/* Desktop 5/3 Grid Layout */
 @media (min-width: 900px) {
     .nft-row {
         display: grid;
         grid-template-columns: 5fr 3fr;
-        gap: 2rem;
-        grid-template-areas:
-            "image title"
-            "image desc"
-            "image content"
-            "meta content"
-            "quote content";
+        column-gap: 3rem;
+        grid-auto-flow: dense;
     }
     
-    /* FIX #2: Left column (5fr) - Artwork image */
+    .nft-title {
+        grid-column: 2;
+    }
+    
+    .nft-short-desc {
+        grid-column: 2;
+    }
+    
     .nft-image-wrapper {
-        grid-area: image;
+        grid-column: 1;
+        grid-row: 1 / 99;
         width: 100%;
         margin: 0;
-        margin-top: 0;
     }
     
     .image-meta {
-        grid-area: meta;
+        grid-column: 1;
         text-align: center;
-        margin-top: 0.5rem;
-        align-self: start;
+        margin-top: 1rem;
+    }
+    
+    .nft-long-desc {
+        grid-column: 2;
+    }
+    
+    .status-module {
+        grid-column: 2;
+    }
+    
+    .nav-links-bottom {
+        grid-column: 2;
+    }
+    
+    .nft-rule {
+        grid-column: 1;
+        margin: 2rem 0 1rem 0;
     }
     
     .quote-block {
-        grid-area: quote;
-        width: 80% !important;
-        align-self: start;
-        margin: 1rem auto 0 auto !important;
-        max-width: none;
-    }
-    
-    /* FIX #2: Right column (3fr) - Text content */
-    .nft-title {
-        grid-area: title;
-    }
-    
-    .nft-description {
-        grid-area: desc;
-    }
-    
-    .nft-content {
-        grid-area: content;
-        padding: 0;
+        grid-column: 1;
+        width: 100%;
+        margin: 1rem 0;
+        text-align: center;
     }
 }
 
@@ -468,16 +506,13 @@ a:hover {
    ============================================ */
 .nft-image-wrapper {
     position: relative;
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     cursor: zoom-in;
     border: 0.625rem solid #1d0101;
-    margin: 2rem;
-    margin-bottom: 0;
-    /* FIX #3: Ensure no white line under background images */
+    margin: 2rem 0;
     line-height: 0;
     display: block;
-    align-self: start;
 }
 
 .nft-image {
@@ -527,12 +562,12 @@ a:hover {
     font-size: 0.85rem;
     color: var(--text);
     text-align: center;
-    margin-top: 0.5rem;
+    margin: 1rem 0 2rem 0;
     opacity: 0.8;
 }
 
 .image-meta p {
-    margin: 2rem 0;
+    margin: 0;
 }
 
 /* Buttons */
@@ -543,15 +578,12 @@ a:hover {
     border-radius: 0.5rem;
     font-size: 0.9rem;
     font-weight: 400;
-    font-family: inherit;
+    font-family: 'Red Hat Text', sans-serif;
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-    margin-top: 1rem;
     display: inline-block;
-}
-
-.text-block p:has(.price-btn) {
-    margin-top: 2rem;
+    color: var(--bk);
+    text-decoration: none;
 }
 
 .price-btn:hover {
@@ -595,7 +627,7 @@ a:hover {
     gap: 1.5rem;
     font-family: 'Red Hat Text', sans-serif;
     font-size: 1.1rem;
-    margin-top: 2rem;
+    margin: 2rem 0;
 }
 
 .nav-links a.active {
@@ -616,8 +648,7 @@ a:hover {
 }
 
 .quote-block {
-    margin: 2rem auto;
-    width: 90%;
+    margin: 2rem 0;
     text-align: center;
     font-family: 'Homemade Apple', cursive;
     font-size: 1.1rem;
