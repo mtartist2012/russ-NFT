@@ -184,12 +184,100 @@ function initAspectRatioImages() {
 }
 ```
 
+## SEO & Meta tag patterns
+All pages require SEO-optimized meta tags following this structure:
+
+**Gallery pages** ([index.html](index.html)):
+```html
+<title>russNFT | 4K Gallery</title>
+<meta name="description" content="Explore the russNFT 4K digital art gallery featuring abstract collages, symbolic landscapes, and contemporary digital artwork by RVL...">
+<meta name="keywords" content="NFT gallery, 4K digital art, abstract collage, digital art collection, RVL artist...">
+```
+
+**Artwork detail pages** (use [meta descriptions.html](meta descriptions.html) as reference):
+```html
+<title>a forest - digital collage by RUSSNFT</title>
+<meta name="description" content="A layered digital forest abstraction blending atmosphere, symbolism, and quiet psychological depth...">
+<meta name="keywords" content="digital forest collage, abstract woodland art, symbolic nature imagery, atmospheric greens, RVL digital art">
+```
+
+**Static pages** ([about.html](about.html), [contact.html](contact.html)):
+- Use page-specific, descriptive content
+- Include "russNFT" or "RVL artist" in descriptions
+- Keywords should reflect page purpose (e.g., "contact NFT artist, commission digital art")
+
+**Meta description guidelines**:
+- 140-160 characters optimal
+- Artwork descriptions focus on visual elements, emotional tone, and symbolic themes
+- Include "RVL digital art" in keywords for consistency
+- Use artwork title format: lowercase for most titles, title case for proper nouns (e.g., "a forest" vs "Blue Redux")
+
+## Footer structure
+All pages use consistent three-column footer from [css/style.css](css/style.css):
+
+```html
+<footer class="footer">
+    <div class="container footer-container">
+        <div class="footer-section">
+            <h3>RUSS NFT</h3>
+            <p>Unlocking the potential of digital art for the 4K age</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="../index.html">Gallery</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section"> 
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="https://www.instagram.com/mtartist2012">Instagram</a></li>
+                <li><a href="https://www.facebook.com/rvlfineart">Facebook</a></li>
+                <li><a href="https://www.rvlfineart.com/favorites">Purchase Prints</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>&copy; 2026 RUSS NFT. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+```
+
+**Path adjustments**:
+- From root pages ([index.html](index.html), [about.html](about.html)): Use `href="index.html"`
+- From `image-pages/` subdirectory: Use `href="../index.html"`
+- External links (Instagram, Facebook, Purchase Prints) remain unchanged
+
+**Social media URLs** (do not modify):
+- Instagram: `https://www.instagram.com/mtartist2012`
+- Facebook: `https://www.facebook.com/rvlfineart`
+- Purchase Prints: `https://www.rvlfineart.com/favorites`
+
+## QR codes
+QR code assets stored in `qr-codes/ASF-qr-codes/` directory for artwork sharing and physical exhibition materials.
+
+**Current QR codes**:
+- `ASF-qr-code-Blue-Redux.jpeg` — Links to Blue Redux artwork page
+
+**Naming convention**: `ASF-qr-code-<artwork-title>.jpeg`
+- Match artwork basename (e.g., "Blue-Redux" for blue-redux.html)
+- Use title case for proper nouns, hyphens for spaces
+- JPEG format for print compatibility
+
+**Usage**: QR codes enable physical exhibition visitors to access high-res digital versions and NFT purchase links via mobile devices. Not currently embedded in HTML pages but available for promotional materials.
+
 ## Testing checklist
 - Verify all thumbnails in gallery load (no 404s)
 - Click each gallery item → detail page loads correctly
 - Detail page shows full-resolution image
 - Back link returns to gallery
 - Test lightbox on applicable pages
+- Validate meta descriptions are unique per page
+- Check footer links work correctly with proper relative paths
 
 ## Platform notes
 - Repo stored in **OneDrive on Windows** — watch for spaces in paths, file locking
@@ -200,3 +288,10 @@ function initAspectRatioImages() {
 - Before adding build tools, package managers, or frameworks
 - Before restructuring image directory layout
 - If changing from static pages to JS-driven SPA
+
+## Quick reference
+- **Local server**: `python -m http.server 8000` from repo root
+- **Image naming**: `<basename>-1.jpg` (thumbs), `-2.jpg` (main), `-3.jpg` (full)
+- **Path from subdirs**: Use `../` prefix for CSS and images
+- **Data source**: [staging list.js](staging list.js) contains all NFT metadata
+- **Template**: Copy [image-pages/a-forest.html](image-pages/a-forest.html) for new artwork pages
