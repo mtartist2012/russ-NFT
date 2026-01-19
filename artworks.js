@@ -1,4 +1,4 @@
-export const artworks = [
+const artworks = [
 {
   slug: "a-forest",
   id: "a-forest",

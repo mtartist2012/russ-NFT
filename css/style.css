@@ -321,7 +321,7 @@ a:hover {
 }
 
 /* ============================================
-   ARTWORK DETAIL PAGES
+   ARTWORK DETAIL PAGES - Mobile First
    ============================================ */
 .nft-row {
     margin-top: 4vh;
@@ -335,7 +335,6 @@ a:hover {
     overflow: hidden;
 }
 
-/* Blurred background for detail pages */
 .nft-row::before {
     content: '';
     position: absolute;
@@ -411,13 +410,30 @@ a:hover {
     color: var(--bg);
 }
 
-/* Desktop 5/3 Grid Layout */
+/* Tablet and Desktop: 5/3 Grid */
 @media (min-width: 900px) {
     .nft-row {
         display: grid;
         grid-template-columns: 5fr 3fr;
         column-gap: 3rem;
-        grid-auto-flow: dense;
+    }
+    
+    .nft-image-wrapper {
+        grid-column: 1;
+        grid-row: 1 / 99;
+        margin: 0;
+    }
+    
+    .image-meta {
+        grid-column: 1;
+    }
+    
+    .quote-block {
+        grid-column: 1;
+    }
+    
+    .nft-rule {
+        grid-column: 1;
     }
     
     .nft-title {
@@ -426,19 +442,6 @@ a:hover {
     
     .nft-short-desc {
         grid-column: 2;
-    }
-    
-    .nft-image-wrapper {
-        grid-column: 1;
-        grid-row: 1 / 99;
-        width: 100%;
-        margin: 0;
-    }
-    
-    .image-meta {
-        grid-column: 1;
-        text-align: center;
-        margin-top: 1rem;
     }
     
     .nft-long-desc {
@@ -451,18 +454,6 @@ a:hover {
     
     .nav-links-bottom {
         grid-column: 2;
-    }
-    
-    .nft-rule {
-        grid-column: 1;
-        margin: 2rem 0 1rem 0;
-    }
-    
-    .quote-block {
-        grid-column: 1;
-        width: 100%;
-        margin: 1rem 0;
-        text-align: center;
     }
 }
 

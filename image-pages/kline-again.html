@@ -47,10 +47,10 @@
         <img id="lb-img" src="">
     </div>
 
-        <script src="../staging list.js"></script>
+        <script src="../artworks.js"></script>
     <script>
-        // Find this specific artwork from the staging list
-        const currentNFT = nfts.find(nft => nft.title === "Kline again");
+        // Find this specific artwork from artworks.js
+        const currentNFT = artworks.find(art => art.title === "Kline again");
         const nftArray = currentNFT ? [currentNFT] : [];
 
         const root = document.getElementById('gallery-root');
@@ -142,7 +142,7 @@
                 
                 const bg = document.createElement("div");
                 bg.className = "nft-image";
-                // Adjust path for staging list (which uses 'images/full/...' not '../images/full/...')
+                // Adjust path for artworks.js (which uses 'images/full/...' not '../images/full/...')
                 const adjustedUrl = imgUrl.startsWith('images/') ? '../' + imgUrl : imgUrl;
                 bg.style.backgroundImage = `url('${adjustedUrl}')`;
                 
