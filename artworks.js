@@ -1,5 +1,5 @@
 export const artworks = [
-  {
+{
   slug: "a-forest",
   id: "a-forest",
   title: "a forest",
@@ -54,8 +54,9 @@ export const artworks = [
     "dateCreated": "2025",
     "width": "6000 px",
     "height": "6000 px"
-  },
-  {
+  }
+},
+{
   slug: "blue-redux",
   id: "blue-redux",
   title: "Blue Redux",
@@ -1137,7 +1138,7 @@ export const artworks = [
     "width": "6000 px",
     "height": "6000 px"
   }
-}.
+},
 {
   slug: "ease-my-worried-mind",
   id: "ease-my-worried-mind",
@@ -1366,5 +1367,5 @@ export const artworks = [
     "height": "6000 px"
   }
 }
-}
+
 ]
