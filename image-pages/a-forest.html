@@ -6,10 +6,12 @@
     <meta name="description" content="A layered digital forest abstraction blending atmosphere, symbolism, and quiet psychological depth. A contemplative RVL composition for modern collectors.">
     <meta name="keywords" content="digital forest collage, abstract woodland art, symbolic nature imagery, atmospheric greens, RVL digital art">
     <title>a forest - digital collage by RUSSNFT</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Droid+Sans:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -42,88 +44,117 @@
         <img id="lb-img" src="">
     </div>
 
-    <script src="../artworks.js"></script>
-    <script>
-        // Find this specific artwork from artworks.js
-        const currentNFT = artworks.find(art => art.title === "a forest");
+    <!-- LOAD NFT DATA FIRST -->
+    <script src="../artworks.js" defer></script>
+
+    <!-- PAGE LOGIC -->
+    <script defer>
+        const currentNFT = nfts.find(nft => nft.title === "a forest");
         const nftArray = currentNFT ? [currentNFT] : [];
 
         const root = document.getElementById('gallery-root');
-        
-        nftArray.forEach((nft, idx) => {
+
+        nftArray.forEach((nft) => {
+
             const section = document.createElement('section');
             section.className = 'nft-row';
+
+            const keywordsHTML = nft.keywords
+                ? nft.keywords.map(kw => `<li>${kw}</li>`).join('')
+                : '';
+
             section.innerHTML = `
-                <h1 class="nft-title">${nft.title}</h1>
-                
-                <div class="nft-short-desc">
-                    <p>${nft.desc}</p>
+                <div class="left-col">
+
+                    <div class="nft-image-wrapper"
+                        data-image="${nft.file}"
+                        data-dims="${nft.dims}"
+                        onclick="openLB('${nft.file}')">
+                    </div>
+
+                    <div class="image-meta">
+                        <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                    </div>
+
+                    <div class="quote-block">${nft.quote || ''}</div>
+
                 </div>
-                
-                <div class="nft-image-wrapper" 
-                     data-image="${nft.file}" 
-                     data-dims="${nft.dims}"
-                     onclick="openLB('${nft.file}')">
+
+                <div class="right-col">
+
+                    <h1 class="nft-title">${nft.title}</h1>
+
+                    <div class="nft-short-desc">
+                        <p>${nft.desc}</p>
+                    </div>
+
+                    <div class="nft-long-desc">
+                        <p>${nft.longDesc || ''}</p>
+                    </div>
+
+                    <div class="nft-themes">
+                        <h3>Themes</h3>
+                        <p>${nft.themes || ''}</p>
+                    </div>
+
+                    <div class="nft-analysis">
+                        <h3>Analysis</h3>
+                        <p>${nft.analysis || ''}</p>
+                    </div>
+
+                    <div class="nft-collector">
+                        <h3>Collector Notes / Provenance</h3>
+                        <p>${nft.collector || ''}</p>
+                    </div>
+
+                    <div class="nft-series">
+                        <h3>Series Context</h3>
+                        <p>${nft.series || ''}</p>
+                    </div>
+
+                    <div class="nft-artist-notes">
+                        <h3>Artist Notes</h3>
+                        <p>${nft.artistNotes || ''}</p>
+                    </div>
+
+                    <div class="nft-keywords">
+                        <h3>Keywords</h3>
+                        <ul class="keywords-list">
+                            ${keywordsHTML}
+                        </ul>
+                    </div>
+
+                    <div class="status-module">
+                        <p><a href="#" target="_blank" class="price-btn">${nft.price}</a></p>
+                    </div>
+
+                    <div class="nav-links-bottom">
+                        <a href="make-room.html">Previous</a>
+                        <span class="nav-separator">|</span>
+                        <a href="../index.html">Gallery</a>
+                        <span class="nav-separator">|</span>
+                        <a href="blue-redux.html">Next</a>
+                    </div>
+
+                    <hr class="nft-rule">
+
                 </div>
-                
-                <div class="image-meta">
-                    <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
-                </div>
-                
-                <div class="nft-long-desc">
-                    <p>${nft.longDesc || ''}</p>
-                    
-                    <h3>Themes</h3>
-                    <p>${nft.themes || ''}</p>
-                    
-                    <h3>Analysis</h3>
-                    <p>${nft.analysis || ''}</p>
-                    
-                    <h3>Collector Notes / Provenance</h3>
-                    <p>${nft.collector || 'First edition NFT; RVL signature; part of the 2025 series.'}</p>
-                    
-                    <h3>Series Context</h3>
-                    <p>${nft.series || ''}</p>
-                    
-                    <h3>Artist Notes</h3>
-                    <p>${nft.artistNotes || ''}</p>
-                    
-                    <h3>Keywords</h3>
-                    <ul class="keywords-list">
-                        ${nft.keywords ? nft.keywords.map(kw => `<li>${kw}</li>`).join('') : ''}
-                    </ul>
-                </div>
-                
-                <div class="status-module">
-                    <p>
-                        <a href="#" target="_blank" class="price-btn">${nft.price}</a>
-                    </p>
-                </div>
-                
-                <div class="nav-links-bottom">
-                    <a href="make-room.html">Previous</a>
-                    <span class="nav-separator">|</span>
-                    <a href="../index.html">Gallery</a>
-                    <span class="nav-separator">|</span>
-                    <a href="blue-redux.html">Next</a>
-                </div>
-                
-                <hr class="nft-rule">
-                
-                <div class="quote-block">${nft.quote || ''}</div>
             `;
+
             root.appendChild(section);
         });
 
-        // Initialize aspect ratio image system
+        /* -----------------------------
+           IMAGE INITIALIZATION (AFTER DOM)
+        ------------------------------ */
+
         function initAspectRatioImages() {
             const wrappers = document.querySelectorAll(".nft-image-wrapper");
-            
+
             wrappers.forEach(wrapper => {
                 const imgUrl = wrapper.dataset.image;
                 const dims = wrapper.dataset.dims;
-                
-                // Calculate aspect ratio from dimensions
+
                 if (dims) {
                     const match = dims.match(/(\d+)\s*x\s*(\d+)/i);
                     if (match) {
@@ -133,19 +164,19 @@
                         wrapper.style.aspectRatio = ratio;
                     }
                 }
-                
+
                 const bg = document.createElement("div");
                 bg.className = "nft-image";
-                // Adjust path for artworks.js (which uses 'images/full/...' not '../images/full/...')
+
                 const adjustedUrl = imgUrl.startsWith('images/') ? '../' + imgUrl : imgUrl;
                 bg.style.backgroundImage = `url('${adjustedUrl}')`;
-                
+
                 const overlay = document.createElement("img");
                 overlay.className = "pixel-overlay";
                 overlay.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
                 overlay.alt = "";
                 overlay.draggable = false;
-                
+
                 wrapper.appendChild(bg);
                 wrapper.appendChild(overlay);
             });
@@ -159,18 +190,18 @@
         function updateDetailImage() {
             const wrappers = document.querySelectorAll('.nft-image-wrapper');
             if (!wrappers.length) return;
-            
+
             const isTabletOrMobile = window.innerWidth <= 1280;
-            
+
             wrappers.forEach(wrapper => {
                 const src = wrapper.dataset.image;
                 const filename = src.substring(src.lastIndexOf('/') + 1);
                 const basename = filename.replace(/-[123]\.jpg$/, '');
-                
-                let newSrc = isTabletOrMobile 
+
+                let newSrc = isTabletOrMobile
                     ? `../images/main/${basename}-2.jpg`
                     : `../images/full/${basename}-3.jpg`;
-                
+
                 wrapper.dataset.image = newSrc;
                 wrapper.setAttribute('onclick', `openLB('${newSrc}')`);
                 const bgDiv = wrapper.querySelector('.nft-image');
@@ -178,6 +209,7 @@
             });
         }
 
+        /* RUN AFTER DOM IS BUILT */
         initAspectRatioImages();
         updateDetailImage();
         window.addEventListener('resize', updateDetailImage);
@@ -197,7 +229,7 @@
                     <li><a href="../contact.html">Contact</a></li>
                 </ul>
             </div>
-            <div class="footer-section"> 
+            <div class="footer-section">
                 <h4>Connect</h4>
                 <ul>
                     <li><a href="https://www.instagram.com/mtartist2012">Instagram</a></li>
@@ -213,9 +245,7 @@
         </div>
     </footer>
 
-
     <script>
-        // Mobile menu toggle
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
 
@@ -224,7 +254,6 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -232,5 +261,6 @@
             });
         });
     </script>
+
 </body>
 </html>
