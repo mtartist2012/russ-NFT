@@ -1,4 +1,4 @@
-const artworks = [
+const nfts = [
 {
   slug: "a-forest",
   id: "a-forest",

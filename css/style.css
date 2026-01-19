@@ -972,12 +972,4 @@ a:hover {
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
-}(≤600px)
-   ============================================ */
-@media (max-width: 600px) {
-    .nft-image-wrapper {
-        width: 100%;
-        margin: 0 auto;
-    }
-    
-    .quote-block {
+}
