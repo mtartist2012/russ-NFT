@@ -11,13 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Red+Hat+Text:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Droid+Sans:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        @media (max-width: 768px) {
-            .nft-image-wrapper {
-                margin-top: 1rem;
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -60,70 +53,64 @@
         nftArray.forEach((nft, idx) => {
             const section = document.createElement('section');
             section.className = 'nft-row';
-            /* FIX #1: DOM ORDER - Mobile-first reading flow
-               Order: Title → Description → Image → Status → Buttons
-               This matches natural mobile reading order without CSS tricks */
             section.innerHTML = `
-                    <!-- FIX #1: Title comes first in DOM for mobile-first -->
-                    <h1 class="nft-title">${nft.title}</h1>
+                <h1 class="nft-title">${nft.title}</h1>
+                
+                <div class="nft-short-desc">
+                    <p>${nft.desc}</p>
+                </div>
+                
+                <div class="nft-image-wrapper" 
+                     data-image="${nft.file}" 
+                     data-dims="${nft.dims}"
+                     onclick="openLB('${nft.file}')">
+                </div>
+                
+                <div class="image-meta">
+                    <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
+                </div>
+                
+                <div class="nft-long-desc">
+                    <p>${nft.longDesc || ''}</p>
                     
-                    <!-- FIX #1: Description follows title -->
-                    <div class="nft-description">
-                        <p>${nft.desc}</p>
-                    </div>
-
-                              
-            <!-- add mod here - not sure what about mobile? -->
+                    <h3>Themes</h3>
+                    <p>${nft.themes || ''}</p>
                     
-                    <!-- FIX #1: Image after text for mobile reading flow -->
-                    <div class="nft-image-wrapper" 
-                         data-image="${nft.file}" 
-                         data-dims="${nft.dims}"
-                         onclick="openLB('${nft.file}')">
-                    </div>
+                    <h3>Analysis</h3>
+                    <p>${nft.analysis || ''}</p>
                     
-                    <div class="image-meta">
-                        <p>${nft.dims}<span style="padding: 0 10px;">|</span>${nft.date}</p>
-                    </div>
+                    <h3>Collector Notes / Provenance</h3>
+                    <p>${nft.collector || 'First edition NFT; RVL signature; part of the 2025 series.'}</p>
                     
-                    <!-- FIX #1: Content sections follow image -->
-                    <div class="nft-content">
-                        <h3>Themes</h3>
-                        <p>${nft.themes || 'ctc'}</p>
-                        
-                        <h3>Analysis</h3>
-                        <p>${nft.analysis || 'ctc'}</p>
-                        
-                        <h3>Collector Notes / Provenance</h3>
-                        <p>${nft.collector || 'First edition NFT; RVL signature; part of the 2025 series.'}</p>
-                        
-                        <h3>Series Context</h3>
-                        <p>${nft.series || 'ctc'}</p>
-                        
-                        <h3>Artist Notes</h3>
-                        <p>${nft.artistNotes || ''}</p>
-                        
-                        <h3>Keywords</h3>
-                        <ul>
-                            ${nft.keywords ? nft.keywords.map(kw => `<li>${kw}</li>`).join('') : '<li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li><li>ctc</li>'}
-                        </ul>
+                    <h3>Series Context</h3>
+                    <p>${nft.series || ''}</p>
                     
-                        <p>
-                            <a href="#" target="_blank" class="price-btn">${nft.price}</a>
-                        </p>
-                        
-                        <div class="nav-links-bottom">
-                            <a href="make-room.html">Previous</a>
-                            <span class="nav-separator">|</span>
-                            <a href="../index.html">Gallery</a>
-                            <span class="nav-separator">|</span>
-                            <a href="blue-redux.html">Next</a>
-                        </div>
-                        
-                        <hr class="nft-rule">
-                    </div>
+                    <h3>Artist Notes</h3>
+                    <p>${nft.artistNotes || ''}</p>
                     
-                    <div class="quote-block">${nft.quote || ''}</div>
+                    <h3>Keywords</h3>
+                    <ul class="keywords-list">
+                        ${nft.keywords ? nft.keywords.map(kw => `<li>${kw}</li>`).join('') : ''}
+                    </ul>
+                </div>
+                
+                <div class="status-module">
+                    <p>
+                        <a href="#" target="_blank" class="price-btn">${nft.price}</a>
+                    </p>
+                </div>
+                
+                <div class="nav-links-bottom">
+                    <a href="make-room.html">Previous</a>
+                    <span class="nav-separator">|</span>
+                    <a href="../index.html">Gallery</a>
+                    <span class="nav-separator">|</span>
+                    <a href="blue-redux.html">Next</a>
+                </div>
+                
+                <hr class="nft-rule">
+                
+                <div class="quote-block">${nft.quote || ''}</div>
             `;
             root.appendChild(section);
         });

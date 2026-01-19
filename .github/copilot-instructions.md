@@ -3,34 +3,32 @@ Concise, actionable guidance for AI coding agents working on this repository —
 
 ## Big picture
 - **Type**: Static multi-page website showcasing digital NFT artwork
-- **Key files**: [index.html](index.html) (gallery hub), [css/style.css](css/style.css), [staging list.js](staging list.js) (metadata source of truth)
+- **Key files**: [index.html](index.html) (gallery hub), [css/style.css](css/style.css), [artworks.js](artworks.js) (metadata source of truth)
 - **Structure**: Gallery hub → individual artwork pages in `image-pages/` directory
-- **Assets**: High-res artwork in `images/full/`, medium-res in `images/main/`, thumbnails in `images/thumbs/`
+- **Assets**: High-res artwork in `images/full/` (6000x6000px for 4K), medium-res in `images/main/`, thumbnails in `images/thumbs/`
 - **Banner images**: Different banners for page types in `images/` — `banner-index.jpg` (gallery), `banner-pages.jpg` (artwork details), `banner-about.jpg`, `banner-contact.jpg`
+- **Note**: `staging list.js` is temporary fallback during artworks.js recovery
 
 ## Architecture & data flow
 - **Multi-page pattern**: [index.html](index.html) shows thumbnail grid linking to dedicated pages (e.g., [image-pages/a-forest.html](image-pages/a-forest.html))
 - **Naming convention**: Thumbnails use `-1` suffix (`a-forest-1.jpg`), medium-res use `-2` suffix (`a-forest-2.jpg`), full images use `-3` suffix (`a-forest-3.jpg`), same basename required
-- **Responsive images** (JavaScript-driven):
+- **Responsive images** (JavaScript-driven, optimized for 4K displays):
   - **Index gallery**: Mobile (≤768px) loads `-1` from `thumbs/`, desktop/tablet loads `-2` from `main/`
-  - **Detail pages**: Tablet/mobile (≤1280px) loads `-2` from `main/`, desktop loads `-3` from `full/`
+  - **Detail pages**: Tablet/mobile (≤1280px) loads `-2` from `main/`, desktop loads `-3` from `full/` (6000x6000px high-res for 4K)
   - Image switching handled by JavaScript on window resize
+  - Breakpoints chosen specifically for 4K display optimization (768px, 900px, 1280px)
 - **Automated aspect ratio system**: Detail pages use data attributes (`data-image`, `data-dims`) with JavaScript that auto-builds background-image divs and calculates aspect ratios from dimensions (`6000 x 6000px` → ratio computed programmatically)
-- **Dynamic content rendering**: Detail pages load [staging list.js](staging list.js) and use `nfts.find(nft => nft.title === "artwork-name")` to pull artwork data dynamically, then render HTML via JavaScript DOM manipulation
+- **Dynamic content rendering**: Detail pages load [artworks.js](artworks.js) and use `artworks.find(art => art.title === "artwork-name")` to pull artwork data dynamically, then render HTML via JavaScript DOM manipulation
 - **Navigation**: 
   - **Navbar links**: Simple navigation with gallery/start, about/contact links
   - **Mobile**: Hamburger menu (`<button class="hamburger">`) toggles `.active` class on `.nav-links`; menu auto-closes when links are clicked
   - **Detail pages**: Previous/gallery/next links in navbar and bottom of content section
   - **Note**: No dropdown artwork list in current implementation; users navigate via gallery grid or sequential prev/next links
-- **Page templates** (located in `z - working/` folder and `image-pages/` for reference):
-  - **Current approach**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven, loads [staging list.js](staging list.js) and finds artwork by title
-  - [z - working/text-template.html](z - working/text-template.html): Text content template for artwork descriptions with section structure guide
-  - [z - working/one-image.css](z - working/one-image.css): Alternative CSS layout (not currently in production)
-  - [z - working/new-hub.html](z - working/new-hub.html): Alternative gallery hub layout
-  - [staging list.js](staging list.js) (root level): **Source of truth** for all NFT metadata
-    - **Required fields per artwork**: `title`, `desc`, `date`, `dims`, `aspectRatio`, `file` (path), `price`
-    - **Optional fields**: `quote`, `themes`, `analysis`, `collector`, `series`, `artistNotes`, `keywords` (array)
-    - **Important**: When adding new artwork, create entry in staging list AND create HTML page in `image-pages/`
+- **Page templates**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — JS-driven, loads [artworks.js](artworks.js) and finds artwork by title
+- **Data structure** - [artworks.js](artworks.js): **Source of truth** for all NFT metadata (defines `const artworks = []`)
+  - **Required fields**: `title`, `desc`, `date`, `dims`, `aspectRatio`, `file` (path), `price`
+  - **Optional fields**: `quote`, `themes`, `analysis`, `collector`, `series`, `artistNotes`, `keywords` (array)
+  - **Important**: When adding new artwork, create entry in artworks.js AND create HTML page in `image-pages/`
 - **Lightbox**: Inline JS (`openLB()` function) handles click-to-zoom; DOM: `<div class="lightbox" id="lightbox" onclick="this.style.display='none'">` — click anywhere to close
 
 ## Critical file structures
@@ -43,13 +41,10 @@ images/
 image-pages/  → individual artwork detail pages (JS-driven with responsive images)
 css/
   style.css   → main styling for ALL pages (gallery + detail pages)
-z - working/  → templates and experimental layouts
-  text-template.html      → content structure guide
-  one-image.css           → alternative layout CSS (not in production)
-  new-hub.html            → alternative gallery hub
 qr-codes/
   ASF-qr-codes/ → QR code assets
-staging list.js → NFT metadata source (root level)
+artworks.js       → NFT metadata source (root level, defines const artworks = [])
+staging list.js   → temporary fallback during recovery
 ```
 
 ## Developer workflow
@@ -66,8 +61,8 @@ python -m http.server 8000
 - Use with caution; review before running on multiple files
 
 **Adding new artwork** (complete workflow): 
-   - **Step 1**: Place thumbnail in `images/thumbs/<name>-1.jpg`, medium-res in `images/main/<name>-2.jpg`, full image in `images/full/<name>-3.jpg`
-   - **Step 2**: Add metadata entry to [staging list.js](staging list.js) `nfts` array:
+   - **Step 1**: Place thumbnail in `images/thumbs/<name>-1.jpg`, medium-res in `images/main/<name>-2.jpg`, full image in `images/full/<name>-3.jpg` (high-res for 4K displays)
+   - **Step 2**: Add metadata entry to [artworks.js](artworks.js) `artworks` array:
      ```javascript
      { 
          title: "artwork name",
@@ -98,13 +93,11 @@ python -m http.server 8000
    - **Case sensitivity**: Image filenames in `images/full/` and `images/thumbs/` mix uppercase and lowercase (e.g., `All-American-3.jpg`, `a-forest-1.jpg`). Match exact case when referencing images.
 
 2. **Templates usage**:
-   - **Primary template**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — loads [staging list.js](staging list.js) dynamically
-   - **How detail pages work**: Pages load staging list via `<script src="../staging list.js">`, then find artwork by title: `const currentNFT = nfts.find(nft => nft.title === "a forest");`
-   - [staging list.js](staging list.js) is the **single source of truth** for all artwork metadata — update this file to change artwork data across the site
-   - [z - working/text-template.html](z - working/text-template.html) provides text structure guide for artwork descriptions
-   - [z - working/new-hub.html](z - working/new-hub.html) is an alternative gallery hub layout (not in production)
-   - **Detail page structure**: Each artwork page includes Themes, Analysis, Collector Notes/Provenance, Series Context, Artist Notes, and Keywords sections — all pulled from [staging list.js](staging list.js)
-   - **Path adjustment**: Detail page JavaScript adjusts paths from staging list (which uses `images/full/...`) to subdirectory paths (`../images/full/...`)
+   - **Primary template**: Use existing files in `image-pages/` (e.g., [image-pages/a-forest.html](image-pages/a-forest.html)) as template — loads [artworks.js](artworks.js) dynamically
+   - **How detail pages work**: Pages load artworks via `<script src="../artworks.js">`, then find artwork by title: `const currentArt = artworks.find(art => art.title === "a forest");`
+   - [artworks.js](artworks.js) is the **single source of truth** for all artwork metadata — update this file to change artwork data across the site
+   - **Detail page structure**: Each artwork page includes Themes, Analysis, Collector Notes/Provenance, Series Context, Artist Notes, and Keywords sections — all pulled from [artworks.js](artworks.js)
+   - **Path adjustment**: Detail page JavaScript adjusts paths from artworks.js (which uses `images/full/...`) to subdirectory paths (`../images/full/...`)
 
 3. **Path references critical detail**: 
    - From root (e.g., [index.html](index.html)): Use `images/full/<name>-3.jpg`
@@ -114,11 +107,40 @@ python -m http.server 8000
 4. **Do not rename/move**: `images/thumbs/`, `images/full/`, `images/main/`, `qr-codes/ASF-qr-codes/` — paths hard-coded in HTML.
 
 ## Styling patterns
-- **Gallery grid**: Desktop uses `grid-template-columns: repeat(3, 1fr)` with `gap: 1.5rem` in [css/style.css](css/style.css); responsive breakpoints adjust for mobile
-- **Detail pages**: Responsive 2-column layout (text left, image right on desktop) via [css/style.css](css/style.css)
+- **Gallery grid**: Desktop uses `grid-template-columns: repeat(3, 1fr)` with `gap: 2.5rem` in [css/style.css](css/style.css); 2 columns at ≤1280px, single column at ≤768px
+- **Detail pages**: Desktop (≥900px) uses 5/3 grid layout (`grid-template-columns: 5fr 3fr`) — image column 1, content column 2
+  - **Critical**: `.nft-image-wrapper` uses `grid-row: 1 / 99` to span all rows, keeping image aligned with content
+  - Mobile (≤900px): Single column stack, image appears in DOM order
+- **Blurred backgrounds**: Gallery and detail sections use `::before` pseudo-elements with `background-image: url(../images/section-background.jpg)` and `filter: blur(8px)` for visual depth
 - **Fonts**: Google Fonts (Oswald, Droid Sans, Roboto, Homemade Apple, Red Hat Text) loaded in `<head>`
 - **CSS Variables**: Color scheme defined in `:root` ([css/style.css](css/style.css)) — `--bg`, `--bk`, `--accent`, `--text`, `--rule`, `--frame`, `--button`
 - **Background**: Page uses `url(../images/page-background-02.jpg)` with `background-size: cover`
+- **Image spacing fix**: Gallery thumbnails use `line-height: 0` and `display: block` to eliminate unwanted white space below images
+
+## CSS layout patterns
+**Desktop 5/3 grid for detail pages** ([css/style.css](css/style.css#L413-L450)):
+```css
+@media (min-width: 900px) {
+    .nft-row {
+        display: grid;
+        grid-template-columns: 5fr 3fr;  /* Image column (wide) | Content column */
+        column-gap: 3rem;
+        grid-auto-flow: dense;
+    }
+    
+    .nft-image-wrapper {
+        grid-column: 1;
+        grid-row: 1 / 99;  /* Span all rows to align with variable-height content */
+        width: 100%;
+        margin: 0;
+    }
+    
+    .nft-title, .nft-short-desc, .nft-long-desc, .status-module {
+        grid-column: 2;  /* All text content in right column */
+    }
+}
+```
+**Why `grid-row: 1 / 99`**: Allows image to span multiple grid rows as content expands, maintaining alignment without explicit row definitions.
 
 ## Examples from codebase
 **Responsive image switching on gallery** ([index.html](index.html#L208-L230)):
@@ -174,10 +196,10 @@ navLinks.querySelectorAll('a').forEach(link => {
 ```
 
 **Detail page structure** ([image-pages/a-forest.html](image-pages/a-forest.html)):
-- Loads [staging list.js](staging list.js) via `<script src="../staging list.js">`
-- Uses JavaScript to find artwork: `const currentNFT = nfts.find(nft => nft.title === "a forest");`
+- Loads [artworks.js](artworks.js) via `<script src="../artworks.js">`
+- Uses JavaScript to find artwork: `const currentArt = artworks.find(art => art.title === "a forest");`
 - Dynamically builds HTML via `innerHTML` including title, description, themes, analysis, collector notes, series context, artist notes, and keywords
-- Image wrapper: `<div class="nft-image-wrapper" data-image="${nft.file}" data-dims="${nft.dims}">` (JavaScript builds background-image div with computed aspect ratio)
+- Image wrapper: `<div class="nft-image-wrapper" data-image="${art.file}" data-dims="${art.dims}">` (JavaScript builds background-image div with computed aspect ratio for 4K displays)
 - Previous/gallery/next navigation in both navbar and bottom of content
 - Path adjustment: JavaScript converts `images/full/...` to `../images/full/...` for subdirectory context
 
@@ -206,11 +228,16 @@ function initAspectRatioImages() {
         bg.className = "nft-image";
         const adjustedUrl = imgUrl.startsWith('images/') ? '../' + imgUrl : imgUrl;
         bg.style.backgroundImage = `url('${adjustedUrl}')`;
-        wrapper.appendChild(bg);
-    });
-}
-
-// Responsive switching between -2 and -3 images
+                
+                // Add pixel overlay for image protection
+                const overlay = document.createElement("img");
+                overlay.className = "pixel-overlay";
+                overlay.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+                overlay.alt = "";
+                overlay.draggable = false;
+                
+                wrapper.appendChild(bg);
+                wrapper.appendChild(overlay);
 function updateDetailImage() {
     const wrappers = document.querySelectorAll('.nft-image-wrapper');
     const isTabletOrMobile = window.innerWidth <= 1280;
@@ -218,13 +245,14 @@ function updateDetailImage() {
     wrappers.forEach(wrapper => {
         const src = wrapper.dataset.image;
         const filename = src.substring(src.lastIndexOf('/') + 1);
-        const basename = filename.replace(/-[23]\.jpg$/, '');
+        const basename = filename.replace(/-[123]\.jpg$/, '');
         
         let newSrc = isTabletOrMobile 
             ? `../images/main/${basename}-2.jpg`
             : `../images/full/${basename}-3.jpg`;
         
         wrapper.dataset.image = newSrc;
+        wrapper.setAttribute('onclick', `openLB('${newSrc}')`);
         const bgDiv = wrapper.querySelector('.nft-image');
         if (bgDiv) bgDiv.style.backgroundImage = `url('${newSrc}')`;
     });
@@ -244,12 +272,100 @@ function updateDetailImage() {
 }
 ```
 
+## SEO & Meta tag patterns
+All pages require SEO-optimized meta tags following this structure:
+
+**Gallery pages** ([index.html](index.html)):
+```html
+<title>russNFT | 4K Gallery</title>
+<meta name="description" content="Explore the russNFT 4K digital art gallery featuring abstract collages, symbolic landscapes, and contemporary digital artwork by RVL...">
+<meta name="keywords" content="NFT gallery, 4K digital art, abstract collage, digital art collection, RVL artist...">
+```
+
+**Artwork detail pages** (use [meta descriptions.html](meta descriptions.html) as reference):
+```html
+<title>a forest - digital collage by RUSSNFT</title>
+<meta name="description" content="A layered digital forest abstraction blending atmosphere, symbolism, and quiet psychological depth...">
+<meta name="keywords" content="digital forest collage, abstract woodland art, symbolic nature imagery, atmospheric greens, RVL digital art">
+```
+
+**Static pages** ([about.html](about.html), [contact.html](contact.html)):
+- Use page-specific, descriptive content
+- Include "russNFT" or "RVL artist" in descriptions
+- Keywords should reflect page purpose (e.g., "contact NFT artist, commission digital art")
+
+**Meta description guidelines**:
+- 140-160 characters optimal
+- Artwork descriptions focus on visual elements, emotional tone, and symbolic themes
+- Include "RVL digital art" in keywords for consistency
+- Use artwork title format: lowercase for most titles, title case for proper nouns (e.g., "a forest" vs "Blue Redux")
+
+## Footer structure
+All pages use consistent three-column footer from [css/style.css](css/style.css):
+
+```html
+<footer class="footer">
+    <div class="container footer-container">
+        <div class="footer-section">
+            <h3>RUSS NFT</h3>
+            <p>Unlocking the potential of digital art for the 4K age</p>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="../index.html">Gallery</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section"> 
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="https://www.instagram.com/mtartist2012">Instagram</a></li>
+                <li><a href="https://www.facebook.com/rvlfineart">Facebook</a></li>
+                <li><a href="https://www.rvlfineart.com/favorites">Purchase Prints</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>&copy; 2026 RUSS NFT. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+```
+
+**Path adjustments**:
+- From root pages ([index.html](index.html), [about.html](about.html)): Use `href="index.html"`
+- From `image-pages/` subdirectory: Use `href="../index.html"`
+- External links (Instagram, Facebook, Purchase Prints) remain unchanged
+
+**Social media URLs** (do not modify):
+- Instagram: `https://www.instagram.com/mtartist2012`
+- Facebook: `https://www.facebook.com/rvlfineart`
+- Purchase Prints: `https://www.rvlfineart.com/favorites`
+
+## QR codes
+QR code assets stored in `qr-codes/ASF-qr-codes/` directory for artwork sharing and physical exhibition materials.
+
+**Current QR codes**:
+- `ASF-qr-code-Blue-Redux.jpeg` — Links to Blue Redux artwork page
+
+**Naming convention**: `ASF-qr-code-<artwork-title>.jpeg`
+- Match artwork basename (e.g., "Blue-Redux" for blue-redux.html)
+- Use title case for proper nouns, hyphens for spaces
+- JPEG format for print compatibility
+
+**Usage**: QR codes enable physical exhibition visitors to access high-res digital versions and NFT purchase links via mobile devices. Not currently embedded in HTML pages but available for promotional materials.
+
 ## Testing checklist
 - Verify all thumbnails in gallery load (no 404s)
 - Click each gallery item → detail page loads correctly
 - Detail page shows full-resolution image
 - Back link returns to gallery
 - Test lightbox on applicable pages
+- Validate meta descriptions are unique per page
+- Check footer links work correctly with proper relative paths
 
 ## Platform notes
 - Repo stored in **OneDrive on Windows** — watch for spaces in paths, file locking
@@ -260,3 +376,10 @@ function updateDetailImage() {
 - Before adding build tools, package managers, or frameworks
 - Before restructuring image directory layout
 - If changing from static pages to JS-driven SPA
+
+## Quick reference
+- **Local server**: `python -m http.server 8000` from repo root
+- **Image naming**: `<basename>-1.jpg` (thumbs), `-2.jpg` (main), `-3.jpg` (full, 6000x6000px for 4K)
+- **Path from subdirs**: Use `../` prefix for CSS and images
+- **Data source**: [artworks.js](artworks.js) contains all NFT metadata
+- **Template**: Copy [image-pages/a-forest.html](image-pages/a-forest.html) for new artwork pages
